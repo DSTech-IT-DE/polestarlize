@@ -1,0 +1,26 @@
+{
+  "name": "polestarlize",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Analyse Polestar Journey Log exports: trips, places, battery health, charging and driving profile.",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DSTech-IT-DE/polestarlize.git"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "workspaces": [
+    "web",
+    "server"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w web",
+    "dev:server": "npm run dev -w server",
+    "build": "npm run build -w web && npm run build -w server",
+    "test": "npm run test -w web && npm run test -w server",
+    "typecheck": "npm run typecheck -w web && npm run typecheck -w server",
+    "start": "npm run start -w server"
+  }
+}

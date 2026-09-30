@@ -1,0 +1,47 @@
+{
+  "loading": "Loading…",
+  "language": "Language",
+  "nav": {
+    "label": "Main navigation",
+    "group": { "analyse": "Analysis", "data": "Data" },
+    "overview": "Overview",
+    "trips": "Trips",
+    "map": "Map & places",
+    "battery": "Battery",
+    "charging": "Charging",
+    "driving": "Driving profile",
+    "costs": "Costs",
+    "import": "Import",
+    "settings": "Settings & account"
+  },
+  "period": {
+    "label": "Period",
+    "all": "All time",
+    "12m": "Last 12 months",
+    "90d": "Last 90 days",
+    "30d": "Last 30 days"
+  },
+  "theme": {
+    "system": "system",
+    "light": "light",
+    "dark": "dark",
+    "current": "Theme: {{theme}}",
+    "switchTo": "Switch to {{theme}} theme"
+  },
+  "empty": {
+    "title": "No trips yet",
+    "body": "Export your Journey Log from the Polestar app (you get a .csv and an .xlsx by e-mail) and import either file. You can also look around with generated demo data first.",
+    "import": "Import export file",
+    "demo": "Load demo data"
+  },
+  "footer": {
+    "license": "Free software under GPL-3.0.",
+    "disclaimer": "Not affiliated with or endorsed by Polestar."
+  },
+  "units": {
+    "trips_one": "{{count}} trip",
+    "trips_other": "{{count}} trips",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days"
+  }
+}

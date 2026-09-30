@@ -1,0 +1,58 @@
+{
+  "overline": "Einstellungen & Konto",
+  "title": "Einstellungen",
+  "lead": "Deine anonyme ID, Darstellung sowie Fahrzeug und Preise für die Auswertungen.",
+  "account": {
+    "title": "Deine ID",
+    "note": "Beim ersten Besuch hast du eine zufällige ID bekommen. Kein Name, keine E-Mail, kein Passwort.",
+    "id": "Anonyme ID",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "localOnly": "Diese Seite speichert deine Fahrten nur in diesem Browser. Merk dir die ID und lade ein Backup herunter, um deine Daten auf ein anderes Gerät zu übertragen."
+  },
+  "display": {
+    "title": "Darstellung",
+    "language": "Sprache",
+    "theme": "Farbschema",
+    "themes": { "system": "System", "light": "Hell", "dark": "Dunkel" },
+    "units": "Entfernungseinheit",
+    "km": "Kilometer",
+    "mi": "Meilen"
+  },
+  "vehicle": {
+    "title": "Fahrzeug",
+    "note": "Die nutzbare Batteriekapazität im Neuzustand ist der 100-%-Bezug für die geschätzte Batteriegesundheit.",
+    "model": "Modell",
+    "custom": "Anderes / eigener Wert",
+    "capacity": "Nutzbare Kapazität (neu)",
+    "capacityHint": "Ungefähre öffentliche Angaben – trag deinen eigenen Wert ein, wenn du ihn kennst."
+  },
+  "prices": {
+    "title": "Preise",
+    "note": "Werden auf der Kostenseite verwendet. Alle Preise je geladener kWh.",
+    "currency": "Währung",
+    "home": "Laden zu Hause",
+    "public": "Öffentliches Laden",
+    "homeShare": "Anteil zu Hause geladen",
+    "homeShareHint": "Grober Anteil der zu Hause geladenen Energie.",
+    "fuel": "Benzinpreis",
+    "fuelConsumption": "Verbrauch Vergleichsfahrzeug"
+  },
+  "data": {
+    "title": "Deine Daten",
+    "note_one": "{{count}} Fahrt gespeichert.",
+    "note_other": "{{count}} Fahrten gespeichert.",
+    "backup": "Backup herunterladen",
+    "csv": "Als Journey-Log-CSV exportieren",
+    "delete": "Alle Fahrten löschen",
+    "deleteConfirm_one": "Wirklich {{count}} Fahrt löschen",
+    "deleteConfirm_other": "Wirklich {{count}} Fahrten löschen",
+    "cancel": "Abbrechen"
+  },
+  "privacy": {
+    "title": "Datenschutz",
+    "p1": "Exporte werden vollständig in deinem Browser gelesen, ausgewertet und in dessen lokaler Datenbank (IndexedDB) gespeichert. Ein einziges First-Party-Cookie enthält deine anonyme ID; es ist technisch notwendig und wird nie zum Tracking verwendet. Es gibt kein Analytics und keine Werbung.",
+    "p2": "Die Karte lädt Kartenkacheln von OpenFreeMap erst, nachdem du es auf der Kartenseite erlaubt hast; deren Server sehen dann deine IP-Adresse.",
+    "p3": "Ist ein Sync-Server aktiv (selbst gehostete Docker-Installation), werden deine Fahrten dort unter einem Hash deiner ID gespeichert. Wer deine ID kennt, kann diese Fahrten lesen – behandle sie wie ein Passwort."
+  }
+}

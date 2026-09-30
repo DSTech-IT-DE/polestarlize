@@ -1,0 +1,47 @@
+{
+  "loading": "Lädt …",
+  "language": "Sprache",
+  "nav": {
+    "label": "Hauptnavigation",
+    "group": { "analyse": "Auswertung", "data": "Daten" },
+    "overview": "Übersicht",
+    "trips": "Fahrten",
+    "map": "Karte & Orte",
+    "battery": "Batterie",
+    "charging": "Laden",
+    "driving": "Fahrprofil",
+    "costs": "Kosten",
+    "import": "Import",
+    "settings": "Einstellungen & Konto"
+  },
+  "period": {
+    "label": "Zeitraum",
+    "all": "Gesamter Zeitraum",
+    "12m": "Letzte 12 Monate",
+    "90d": "Letzte 90 Tage",
+    "30d": "Letzte 30 Tage"
+  },
+  "theme": {
+    "system": "System",
+    "light": "hell",
+    "dark": "dunkel",
+    "current": "Farbschema: {{theme}}",
+    "switchTo": "Zu Farbschema {{theme}} wechseln"
+  },
+  "empty": {
+    "title": "Noch keine Fahrten",
+    "body": "Exportiere dein Fahrtenbuch aus der Polestar-App „Journey Log“ (du bekommst eine .csv und eine .xlsx per E-Mail) und importiere eine der beiden Dateien. Oder schau dich erst mit generierten Demodaten um.",
+    "import": "Exportdatei importieren",
+    "demo": "Demodaten laden"
+  },
+  "footer": {
+    "license": "Freie Software unter GPL-3.0.",
+    "disclaimer": "Kein offizielles Angebot von Polestar."
+  },
+  "units": {
+    "trips_one": "{{count}} Fahrt",
+    "trips_other": "{{count}} Fahrten",
+    "days_one": "{{count}} Tag",
+    "days_other": "{{count}} Tage"
+  }
+}

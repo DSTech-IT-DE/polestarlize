@@ -1,0 +1,248 @@
+/* App shell: sidebar on wide screens, top bar on narrow ones. */
+.shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 24px 0 20px;
+  border-right: 1px solid var(--rule);
+  background: var(--surface);
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 22px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+}
+
+.brand svg {
+  flex: none;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav a {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  align-items: baseline;
+  padding: 7px 22px 7px 20px;
+  border-left: 2px solid transparent;
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav a .nav-index {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.nav a:hover {
+  color: var(--ink);
+  background: var(--bg);
+}
+
+.nav a[aria-current='page'] {
+  border-left-color: var(--accent);
+  color: var(--ink);
+  font-weight: 600;
+  background: var(--bg);
+}
+
+.nav-group-label {
+  padding: 18px 22px 6px;
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 22px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+}
+
+.repo-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+.repo-link:hover {
+  color: var(--ink);
+}
+
+.repo-link .repo-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.version {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px var(--gutter);
+  border-bottom: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(6px);
+  min-height: 54px;
+}
+
+.topbar-mobile-brand {
+  display: none;
+}
+
+.content {
+  flex: 1;
+  padding: 36px var(--gutter) 64px;
+  width: 100%;
+  max-width: 1360px;
+}
+
+.site-footer {
+  padding: 18px var(--gutter) 28px;
+  border-top: 1px solid var(--rule);
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .sidebar .brand,
+  .sidebar .sidebar-footer,
+  .sidebar .nav-group-label {
+    display: none;
+  }
+
+  .nav {
+    flex-direction: row;
+  }
+
+  .nav a {
+    display: block;
+    padding: 12px 12px 10px;
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+
+  .nav a .nav-index {
+    display: none;
+  }
+
+  .nav a[aria-current='page'] {
+    border-bottom-color: var(--accent);
+  }
+
+  .shell {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main {
+    order: 2;
+  }
+
+  .sidebar {
+    order: 1;
+    position: sticky;
+    top: 0;
+    z-index: 25;
+  }
+
+  .topbar {
+    position: static;
+  }
+
+  .topbar-mobile-brand {
+    display: flex;
+  }
+
+  .content {
+    padding-top: 24px;
+  }
+}
+
+.topbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.select-compact {
+  height: 32px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.period-select .select {
+  height: 32px;
+  font-size: 13px;
+}

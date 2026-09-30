@@ -1,0 +1,44 @@
+{
+  "overline": "Import",
+  "title": "Import Journey Log exports",
+  "lead": "Drop the .csv or .xlsx file the Polestar app mailed you. Import new exports whenever you like – only new or changed trips are added.",
+  "drop": "Drop export files here",
+  "reading": "Reading files…",
+  "accepted": "Journey Log .csv or .xlsx, several at once, or a polestarlize backup (.json).",
+  "choose": "Choose files",
+  "demo": "Load demo data instead",
+  "result": {
+    "title_one": "{{count}} new trip imported.",
+    "title_other": "{{count}} new trips imported.",
+    "detail": "{{updated}} updated, {{unchanged}} already known, {{replaced}} replaced by merged trips. {{total}} trips stored in total.",
+    "skipped_one": "{{count}} row could not be read and was skipped.",
+    "skipped_other": "{{count}} rows could not be read and were skipped.",
+    "view": "Show overview →"
+  },
+  "error": {
+    "not-journey-log": "This does not look like a Journey Log export – the start date, end date or distance column is missing.",
+    "empty": "The file contains no trips.",
+    "unreadable": "The file could not be read. Is it a .csv or .xlsx from the Journey Log app?"
+  },
+  "how": {
+    "title": "How to get an export",
+    "step1": "Open the Journey Log app in your Polestar (or the Polestar app, depending on your software version).",
+    "step2": "Choose the period you want and tap “Export”.",
+    "step3": "Enter your e-mail address. You receive a .csv and an .xlsx file with the same content.",
+    "step4": "Import either file here. Next month, simply import the new export on top."
+  },
+  "incremental": {
+    "title": "Incremental and overlap-safe",
+    "body": "Trips are recognised by start time and odometer. Overlapping exports never create duplicates. If you edited trips in the app – changed a category, added a comment or merged trips – the newer export wins."
+  },
+  "privacy": "Files are read in your browser. Nothing is sent anywhere unless a sync server is enabled in the settings.",
+  "history": {
+    "title": "Import history",
+    "when": "Imported",
+    "files": "Files",
+    "range": "Trips from – to",
+    "added": "New",
+    "updated": "Updated",
+    "replaced": "Replaced"
+  }
+}
