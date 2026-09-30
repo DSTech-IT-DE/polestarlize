@@ -111,7 +111,7 @@ export default function OverviewPage() {
         }
       >
         <div className="panel panel-flush table-wrap">
-          <table className="table">
+          <table className="table table-wide">
             <thead>
               <tr>
                 <th>{t('when')}</th>
