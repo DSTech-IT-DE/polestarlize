@@ -13,7 +13,7 @@ interface Place {
 
 const HOME: Place = { address: 'Vasagatan 12, 411 24 Göteborg, Sweden', lat: 57.7009, lon: 11.9685 };
 const PLACES: Place[] = [
-  { address: 'Lindholmspiren 3, 417 56 Göteborg, Sweden', lat: 57.7069, lon: 11.9387 },
+  { address: 'Torslandavägen 2, 423 37 Torslanda, Sweden', lat: 57.7205, lon: 11.7797 },
   { address: 'Nordstadstorget 1, 411 05 Göteborg, Sweden', lat: 57.7089, lon: 11.9699 },
   { address: 'Frölunda Torg 4, 421 42 Västra Frölunda, Sweden', lat: 57.6526, lon: 11.9109 },
   { address: 'Mölndalsvägen 91, 412 63 Göteborg, Sweden', lat: 57.6855, lon: 11.9985 },
@@ -71,7 +71,7 @@ export function generateDemoTrips(options: { endDate?: Date; days?: number; seed
       if (random() < 0.3) plan.push(PLACES[1 + Math.floor(random() * 3)]);
       plan.push(HOME);
     } else if (random() < 0.7) {
-      const far = random() < 0.12;
+      const far = random() < 0.3;
       plan.push(far ? PLACES[4 + Math.floor(random() * 4)] : PLACES[1 + Math.floor(random() * 3)]);
       plan.push(HOME);
     }
@@ -87,7 +87,7 @@ export function generateDemoTrips(options: { endDate?: Date; days?: number; seed
       let socDrop = Math.round((energy / capacity) * 100);
       if (soc - socDrop < 12) {
         // Fast charge on the way.
-        soc = Math.min(90, soc + 60);
+        soc = Math.min(95, Math.max(soc + 60, socDrop + 15));
       }
       socDrop = Math.min(socDrop, soc - 5);
       const start = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(hour), Math.floor((hour % 1) * 60));
