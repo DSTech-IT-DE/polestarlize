@@ -1,5 +1,66 @@
 {
   "overline": "Trips",
   "title": "Trips",
-  "lead": "Every journey, searchable and exportable."
+  "lead": "Every journey in the selected period. Search, filter and export the result in the Journey Log format, for example as a logbook of private and business trips.",
+  "export": "Export {{count}} trips (CSV)",
+  "list": "Journeys",
+  "range": "{{from}}–{{to}} of {{total}}",
+  "none": "No trips match the filter.",
+  "toggle": "Show details",
+  "commentShort": "Note",
+  "filter": {
+    "search": "Search",
+    "searchPlaceholder": "Address or comment",
+    "category": "Category",
+    "type": "Trip type",
+    "all": "All",
+    "minDistance": "Min. distance ({{unit}})",
+    "reset": "Reset filters",
+    "place": "Showing trips that start or end at {{place}}.",
+    "placeUnknown": "The linked place does not exist in this period. Places are recalculated from the selected period, so the link may be outdated."
+  },
+  "category": {
+    "private": "Private",
+    "business": "Business",
+    "uncategorized": "Uncategorized",
+    "other": "Other",
+    "none": "–"
+  },
+  "type": {
+    "single": "Single",
+    "merged": "Merged",
+    "mergedShort": "Merged"
+  },
+  "summary": {
+    "trips": "Trips",
+    "ofAll": "of {{count}} in this period",
+    "distance": "Distance",
+    "energy": "Energy",
+    "consumption": "Consumption",
+    "split": "Distance by category"
+  },
+  "col": {
+    "when": "Start",
+    "duration": "Duration",
+    "route": "Route",
+    "distance": "Distance",
+    "energy": "Energy",
+    "consumption": "Consumption",
+    "soc": "SOC",
+    "category": "Category"
+  },
+  "details": {
+    "from": "From",
+    "to": "To",
+    "time": "Time",
+    "avgSpeed": "Average speed {{speed}}",
+    "odometer": "Odometer",
+    "socUsed": "{{used}} % of the battery used ({{from}} → {{to}} %)",
+    "comment": "Comment"
+  },
+  "pager": {
+    "label": "Pages",
+    "prev": "Previous",
+    "next": "Next"
+  }
 }

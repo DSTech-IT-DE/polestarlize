@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { monthlyTotals, totals } from '../../analytics/core';
 import { consumptionPer100 } from '../../domain/trip';
+import { shortAddress } from '../../lib/address';
 import { useFormat } from '../../lib/format';
 import { href } from '../../lib/router';
 import { useDataset } from '../../store/dataset';
@@ -148,10 +149,4 @@ export default function OverviewPage() {
   );
 }
 
-/** "Street 1, 12345 Town, Country" → "Street 1, Town". */
-export function shortAddress(address: string): string {
-  const parts = address.split(',').map((p) => p.trim());
-  if (parts.length < 3) return address || '–';
-  const town = parts[parts.length - 2].replace(/^\d{4,6}\s+|^\d{3}\s\d{2}\s+/, '');
-  return `${parts[0]}, ${town}`;
-}
+export { shortAddress };

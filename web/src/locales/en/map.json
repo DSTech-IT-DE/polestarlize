@@ -1,5 +1,91 @@
 {
   "overline": "Map & places",
   "title": "Map & places",
-  "lead": "Where you have been and the places you return to."
+  "lead": "Where you have been and the places you return to. Places are found by grouping trip start and end points within about 150 m; the car only records these two points per trip, not the route in between.",
+  "home": "Home",
+  "work": "Work",
+  "fit": "Reset view",
+  "showTrips": "Show trips",
+  "layers": {
+    "label": "Map layers",
+    "places": "Places",
+    "heat": "Heatmap of start and end points",
+    "lines": "Trip lines"
+  },
+  "legend": {
+    "other": "Other place (size = visits)",
+    "lines": "Lines connect start and end point of a trip; they are not the driven route."
+  },
+  "map": {
+    "title": "Map of your trips",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "closePopup": "Close",
+    "attribution": "Show attribution",
+    "gestureWindows": "Use Ctrl + scroll to zoom the map",
+    "gestureMac": "Use ⌘ + scroll to zoom the map",
+    "gestureMobile": "Use two fingers to move the map"
+  },
+  "consent": {
+    "title": "Load the map?",
+    "body": "The map background comes from OpenFreeMap (openfreemap.org). Loading it sends requests to their servers, which see your IP address and the map area you look at. Your trips, addresses and coordinates are not sent anywhere.",
+    "local": "Everything else on this page works without the map.",
+    "load": "Load map",
+    "remember": "Remember my choice"
+  },
+  "noCoords": {
+    "title": "No coordinates",
+    "body": "The trips in this period have no GPS coordinates, so there is nothing to show on a map."
+  },
+  "stats": {
+    "title": "Overview",
+    "note": "Countries and towns are read from the address text, distances from the coordinates.",
+    "places": "Places",
+    "homeHint": "Home: {{place}}",
+    "noHome": "Home could not be identified",
+    "towns": "Towns",
+    "countries": "Countries",
+    "farthest": "Farthest from home",
+    "farthestHint": "{{place}}",
+    "needsHome": "needs a detected home",
+    "homeWork": "Home to work",
+    "airLine": "straight line",
+    "needsWork": "no regular workplace found"
+  },
+  "places": {
+    "title": "Places",
+    "note": "Home is where the car most often ends the day. Work is a place you reach on weekdays during the day and stay at for at least four hours, on at least five days. Both are estimates and stay empty when nothing stands out.",
+    "all": "Show {{count}} places",
+    "fewer": "Show fewer"
+  },
+  "col": {
+    "place": "Place",
+    "town": "Town",
+    "visits": "Visits",
+    "dwell": "Typical stay",
+    "share": "Trips",
+    "first": "First",
+    "last": "Last"
+  },
+  "routes": {
+    "title": "Frequent routes",
+    "note": "Place pairs you drive between. Consumption only counts trips that report energy. Trips that start and end at the same place are not listed.",
+    "mode": "Direction",
+    "directed": "One way",
+    "combined": "Both ways",
+    "none": "No route was driven at least twice.",
+    "route": "Route",
+    "trips": "Trips",
+    "distance": "Avg. distance",
+    "consumption": "Avg. consumption",
+    "duration": "Avg. duration"
+  },
+  "geo": {
+    "title": "Countries and towns",
+    "note": "Counted by arrivals at an address in that country or town.",
+    "country": "Country",
+    "town": "Town",
+    "arrivals": "Arrivals",
+    "moreTowns": "and {{count}} more towns"
+  }
 }
