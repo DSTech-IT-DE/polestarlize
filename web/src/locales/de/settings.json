@@ -36,7 +36,11 @@
     "homeShare": "Anteil zu Hause geladen",
     "homeShareHint": "Grober Anteil der zu Hause geladenen Energie.",
     "fuel": "Benzinpreis",
-    "fuelConsumption": "Verbrauch Vergleichsfahrzeug"
+    "fuelConsumption": "Verbrauch Vergleichsfahrzeug",
+    "chargingLoss": "Ladeverlust",
+    "chargingLossHint": "Energie, die zwischen Steckdose und Akku verloren geht. Üblich sind 8 bis 15 %.",
+    "gridCo2": "CO₂-Intensität des Stroms",
+    "gridCo2Hint": "Durchschnittliche Emissionen je kWh Strom. Der deutsche Strommix liegt bei etwa 380 g/kWh."
   },
   "data": {
     "title": "Deine Daten",

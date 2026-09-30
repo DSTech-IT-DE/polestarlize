@@ -21,11 +21,20 @@ export interface Settings {
   fuelPrice: number;
   /** Consumption of the comparison combustion car in l/100 km. */
   fuelConsumption: number;
+  /** Energy lost between wall plug and battery in percent (charger and battery heat). */
+  chargingLossPercent: number;
+  /** Carbon intensity of the electricity in g CO2 per kWh (Germany: roughly 380). */
+  gridCo2: number;
   /** Base URL of a sync server. Empty = same origin (Docker) when available. */
   syncServerUrl: string;
   /** The user agreed to load map tiles from a third-party tile server. */
   mapConsent: boolean;
+  /** ISO time of the last change to a synced setting; `''` = never changed. Used for last-write-wins sync. */
+  updatedAt: string;
 }
+
+/** Settings that stay on this device and are never synced. */
+export const LOCAL_ONLY_SETTINGS: readonly (keyof Settings)[] = ['theme', 'syncServerUrl', 'mapConsent', 'updatedAt'];
 
 export const DEFAULT_SETTINGS: Settings = {
   theme: 'system',
@@ -38,8 +47,11 @@ export const DEFAULT_SETTINGS: Settings = {
   homeShare: 0.8,
   fuelPrice: 1.75,
   fuelConsumption: 6.5,
+  chargingLossPercent: 10,
+  gridCo2: 380,
   syncServerUrl: '',
   mapConsent: false,
+  updatedAt: '',
 };
 
 const STORAGE_KEY = 'polestarlize.settings';
@@ -61,7 +73,9 @@ export function getSettings(): Settings {
 }
 
 export function updateSettings(patch: Partial<Settings>): void {
-  current = { ...current, ...patch };
+  const touchesSynced = Object.keys(patch).some((key) => !LOCAL_ONLY_SETTINGS.includes(key as keyof Settings));
+  // An explicit `updatedAt` in the patch comes from the sync itself and must not be overwritten.
+  current = { ...current, ...(touchesSynced ? { updatedAt: new Date().toISOString() } : {}), ...patch };
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(current));
   } catch {
@@ -70,11 +84,11 @@ export function updateSettings(patch: Partial<Settings>): void {
   for (const listener of listeners) listener();
 }
 
-function subscribe(listener: () => void) {
+export function subscribeSettings(listener: () => void) {
   listeners.add(listener);
   return () => listeners.delete(listener);
 }
 
 export function useSettings(): Settings {
-  return useSyncExternalStore(subscribe, getSettings, getSettings);
+  return useSyncExternalStore(subscribeSettings, getSettings, getSettings);
 }

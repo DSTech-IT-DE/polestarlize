@@ -164,6 +164,25 @@ export default function SettingsPage() {
           />
           <NumberField label={t('prices.fuel')} value={settings.fuelPrice} step={0.01} min={0} suffix={`${settings.currency}/l`} onChange={(fuelPrice) => set({ fuelPrice })} />
           <NumberField label={t('prices.fuelConsumption')} value={settings.fuelConsumption} step={0.1} min={0} suffix="l/100 km" onChange={(fuelConsumption) => set({ fuelConsumption })} />
+          <NumberField
+            label={t('prices.chargingLoss')}
+            hint={t('prices.chargingLossHint')}
+            value={settings.chargingLossPercent}
+            step={1}
+            min={0}
+            max={50}
+            suffix="%"
+            onChange={(chargingLossPercent) => set({ chargingLossPercent })}
+          />
+          <NumberField
+            label={t('prices.gridCo2')}
+            hint={t('prices.gridCo2Hint')}
+            value={settings.gridCo2}
+            step={10}
+            min={0}
+            suffix="g/kWh"
+            onChange={(gridCo2) => set({ gridCo2 })}
+          />
         </div>
       </Section>
 

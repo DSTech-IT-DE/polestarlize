@@ -36,7 +36,11 @@
     "homeShare": "Share charged at home",
     "homeShareHint": "Rough share of energy charged at home.",
     "fuel": "Petrol price",
-    "fuelConsumption": "Comparison car consumption"
+    "fuelConsumption": "Comparison car consumption",
+    "chargingLoss": "Charging loss",
+    "chargingLossHint": "Energy lost between wall plug and battery. Typically 8 to 15 %.",
+    "gridCo2": "Grid CO₂ intensity",
+    "gridCo2Hint": "Average emissions per kWh of electricity. The German mix is roughly 380 g/kWh."
   },
   "data": {
     "title": "Your data",
