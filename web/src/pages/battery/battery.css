@@ -1,0 +1,33 @@
+.bc-facts td:first-child {
+  color: var(--ink-2);
+}
+
+.bc-facts td.num {
+  font-weight: 500;
+}
+
+.bc-care {
+  display: grid;
+  gap: 10px;
+}
+
+.bc-care p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--ink-2);
+}
+
+.bc-care p strong {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.bc-note {
+  margin-top: 16px;
+}
+
+.grid > .panel-flush > .panel-title {
+  padding: 16px 20px 0;
+  margin-bottom: 8px;
+}

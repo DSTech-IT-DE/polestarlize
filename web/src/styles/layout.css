@@ -246,3 +246,17 @@
   height: 32px;
   font-size: 13px;
 }
+
+@media (max-width: 520px) {
+  .topbar {
+    gap: 8px;
+  }
+
+  .topbar-mobile-brand span {
+    display: none;
+  }
+
+  .period-select .select {
+    max-width: 170px;
+  }
+}

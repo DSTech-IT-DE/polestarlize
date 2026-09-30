@@ -1,5 +1,72 @@
 {
   "overline": "Costs",
   "title": "Costs",
-  "lead": "What driving electric costs you, compared with a combustion car."
+  "lead": "What driving electric costs you, compared with a combustion car.",
+  "estimateNote": "All figures are estimates. The Journey Log records energy used by the drive, not what you paid. Costs are derived from the prices below, a fixed charging loss and a home/public mix that you set yourself. The petrol comparison assumes the same distance in a car with the consumption shown.",
+  "stats": {
+    "total": "Electricity cost",
+    "totalHint": "{{kwh}} from the grid",
+    "per100": "Cost per 100 {{unit}}",
+    "perMonth": "Cost per month",
+    "perMonthHint": "average",
+    "perTrip": "Cost per trip",
+    "fuel": "Petrol car, same distance",
+    "fuelHint": "{{litres}} at {{price}}/l",
+    "savings": "Savings",
+    "savingsHint": "{{share}} less than petrol",
+    "savingsHintNegative": "{{share}} more than petrol",
+    "co2Electric": "CO₂ electric",
+    "co2ElectricHint": "at {{intensity}} g/kWh",
+    "co2Petrol": "CO₂ petrol car",
+    "co2PetrolHint": "{{saved}} kg less with the EV"
+  },
+  "assumptions": {
+    "title": "Assumptions",
+    "note": "Change the three main prices here; everything below updates at once.",
+    "home": "Home charging",
+    "public": "Public charging",
+    "fuel": "Petrol price",
+    "perKwh": "{{currency}}/kWh",
+    "perLitre": "{{currency}}/l",
+    "derived": "Home share {{share}}, blended price {{price}}/kWh, charging loss {{loss}}, grid mix {{co2}} g CO₂/kWh, petrol car {{consumption}} l/100 km.",
+    "moreInSettings": "More in settings",
+    "coverage": "Only the {{count}} trips with an energy value are counted; the petrol car is compared over the same {{distance}}.",
+    "co2Note": "CO₂ counts petrol tailpipe emissions ({{factor}} kg per litre) and the grid mix for the electricity. Fuel production and manufacturing are not included."
+  },
+  "charts": {
+    "monthly": "Cost per month",
+    "electric": "Electric",
+    "petrol": "Petrol car",
+    "cumulative": "Cumulative savings",
+    "cumulativeNote": "Petrol cost minus electricity cost, added up month by month.",
+    "per100": "Cost per 100 {{unit}} by month",
+    "per100Note": "Months under {{distance}} are left out.",
+    "savings": "Savings",
+    "trips": "Trips",
+    "distance": "Distance"
+  },
+  "table": {
+    "monthly": "Per month",
+    "month": "Month",
+    "trips": "Trips",
+    "distance": "Distance",
+    "battery": "Battery energy",
+    "grid": "Grid energy",
+    "cost": "Cost",
+    "fuel": "Petrol equivalent",
+    "savings": "Savings",
+    "total": "Total",
+    "showAll": "Show all {{count}} months",
+    "showLess": "Show fewer"
+  },
+  "categories": {
+    "title": "Per category",
+    "note": "Distance and energy cost per trip category. Useful for reimbursing business trips.",
+    "category": "Category",
+    "Private": "Private",
+    "Business": "Business",
+    "Uncategorized": "Uncategorized",
+    "Uncategorised": "Uncategorized",
+    "empty": "Uncategorized"
+  }
 }

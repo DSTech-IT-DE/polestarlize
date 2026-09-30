@@ -1,5 +1,85 @@
 {
   "overline": "Battery",
   "title": "Battery",
-  "lead": "Estimated usable capacity and how the battery is used."
+  "lead": "Estimated usable capacity, how it changes over time, and how the battery is used.",
+  "stats": {
+    "capacity": "Usable capacity (est.)",
+    "capacityHint": "95 % range {{low}}–{{high}} · {{window}}",
+    "capacityNone": "Not enough long trips yet",
+    "soh": "State of health (est.)",
+    "sohHint": "of nominal {{nominal}} kWh",
+    "sohAbove": "above nominal, see note",
+    "trend": "Capacity trend",
+    "perYear": "kWh/year",
+    "perYearShort": "per year",
+    "trendClear": "clearly negative or positive",
+    "trendNoise": "within noise",
+    "trendNone": "not enough history yet",
+    "cycles": "Equivalent full cycles",
+    "cyclesHint": "{{energy}} kWh throughput",
+    "lowest": "Lowest charge level",
+    "lowestHint": "at the end of a trip"
+  },
+  "honest": {
+    "title": "Read this as an estimate.",
+    "body": "The figures come from the car's own energy and charge-level readings, not from a battery test. The absolute level can be off by a few percent: the displayed charge level hides a buffer and is rounded to whole percent. A value above 100 % of the nominal capacity is possible for that reason and does not mean the battery grew. The trend over several months says more than the level."
+  },
+  "capacity": {
+    "title": "Usable capacity",
+    "note": "Per trip, energy used divided by the charge points lost gives an implied capacity. Only trips that lost at least {{trip}} points count, and a month is only shown once its trips add up to {{month}} points. Months are energy-weighted totals, not averages of single trips.",
+    "tooLittle": "No month has enough long trips yet (at least {{trip}} charge points per trip and {{month}} points per month). Import more history or drive a few longer trips.",
+    "windowDays": "last {{days}} days",
+    "windowAll": "all data",
+    "monthly": "Estimated usable capacity per month",
+    "perTrip": "Single trips with at least {{points}} points used",
+    "perTripNone": "No trip used {{points}} charge points or more.",
+    "trendNote": "Weighted trend over {{months}} months: {{slope}} kWh per year (standard error {{se}}). A slope smaller than about twice its error cannot be told apart from noise."
+  },
+  "chart": {
+    "estimate": "Estimate",
+    "interval": "95 % interval",
+    "trend": "Trend",
+    "nominal": "nominal {{value}} kWh",
+    "basis": "{{points}} charge points from {{count}} trips",
+    "tripBasis": "{{energy}} kWh over {{points}} charge points"
+  },
+  "basis": {
+    "title": "Basis of the estimate",
+    "nominal": "Nominal capacity (setting)",
+    "recent": "Estimate, last {{days}} days",
+    "interval": "95 % interval (sampling noise only)",
+    "overall": "Estimate, all data",
+    "trips": "Trips counted",
+    "points": "Charge points counted",
+    "months": "Months shown"
+  },
+  "usage": {
+    "title": "How the battery is used",
+    "note": "Based on the trips of the selected period. Charge levels are taken at the start and at the end of each trip.",
+    "histogram": "Charge level at trip start and end (%)",
+    "atStart": "At start",
+    "atEnd": "At end",
+    "tripsAxis": "Trips",
+    "tripsValue": "{{count}} trips",
+    "facts": "Figures",
+    "startHigh": "Trips starting at 90 % or more",
+    "endLow": "Trips ending at 20 % or less",
+    "chargeHigh": "Charges ending at 90 % or more",
+    "lowest": "Lowest level at a trip end",
+    "day": "Typical day (first start → last end)",
+    "days": "Days with trips",
+    "throughput": "Energy throughput",
+    "cycles": "Equivalent full cycles"
+  },
+  "care": {
+    "title": "Battery care",
+    "note": "Neutral observations from your data. Lithium-ion cells tend to age a little faster when they stay at a very high or very low charge level for long periods; check your manual for the charge limit the manufacturer suggests for daily use.",
+    "noSoc": "The trips in this period carry no charge level, so there is nothing to evaluate.",
+    "highFew": "{{share}} of the trips started at 90 % or more, so the battery rarely left the house that full.",
+    "highMany": "{{share}} of the trips started at 90 % or more. If you do not need the range every day, a lower daily charge limit would reduce time spent at a high charge level.",
+    "lowFew": "{{share}} of the trips ended at 20 % or less; the lowest level reached was {{min}} %.",
+    "lowMany": "{{share}} of the trips ended at 20 % or less; the lowest level reached was {{min}} %. Charging a little earlier would keep the battery out of the low range more often.",
+    "chargeHigh": "{{share}} of the {{count}} detected charges (at least {{gain}} points) ended at 90 % or more.",
+    "chargeLow": "Only {{share}} of the {{count}} detected charges (at least {{gain}} points) ended at 90 % or more."
+  }
 }

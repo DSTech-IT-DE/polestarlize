@@ -1,5 +1,72 @@
 {
   "overline": "Kosten",
   "title": "Kosten",
-  "lead": "Was dich das elektrische Fahren kostet – im Vergleich zum Verbrenner."
+  "lead": "Was dich das elektrische Fahren kostet – im Vergleich zum Verbrenner.",
+  "estimateNote": "Alle Werte sind Schätzungen. Das Fahrtenbuch erfasst die Energie, die die Fahrt verbraucht hat, nicht das, was du bezahlt hast. Die Kosten ergeben sich aus den Preisen unten, einem festen Ladeverlust und einem Mix aus Heim- und öffentlichem Laden, den du selbst festlegst. Der Benzinvergleich unterstellt dieselbe Strecke mit einem Auto mit dem angezeigten Verbrauch.",
+  "stats": {
+    "total": "Stromkosten",
+    "totalHint": "{{kwh}} aus dem Netz",
+    "per100": "Kosten pro 100 {{unit}}",
+    "perMonth": "Kosten pro Monat",
+    "perMonthHint": "Durchschnitt",
+    "perTrip": "Kosten pro Fahrt",
+    "fuel": "Benziner, gleiche Strecke",
+    "fuelHint": "{{litres}} zu {{price}}/l",
+    "savings": "Ersparnis",
+    "savingsHint": "{{share}} weniger als Benzin",
+    "savingsHintNegative": "{{share}} mehr als Benzin",
+    "co2Electric": "CO₂ elektrisch",
+    "co2ElectricHint": "bei {{intensity}} g/kWh",
+    "co2Petrol": "CO₂ Benziner",
+    "co2PetrolHint": "{{saved}} kg weniger mit dem E-Auto"
+  },
+  "assumptions": {
+    "title": "Annahmen",
+    "note": "Die drei wichtigsten Preise kannst du hier ändern; alles darunter rechnet sofort neu.",
+    "home": "Laden zu Hause",
+    "public": "Öffentliches Laden",
+    "fuel": "Benzinpreis",
+    "perKwh": "{{currency}}/kWh",
+    "perLitre": "{{currency}}/l",
+    "derived": "Heimanteil {{share}}, Mischpreis {{price}}/kWh, Ladeverlust {{loss}}, Strommix {{co2}} g CO₂/kWh, Benziner {{consumption}} l/100 km.",
+    "moreInSettings": "Mehr in den Einstellungen",
+    "coverage": "Gezählt werden nur die {{count}} Fahrten mit Energiewert; der Benziner wird über dieselben {{distance}} verglichen.",
+    "co2Note": "Das CO₂ des Benziners zählt die Abgase ({{factor}} kg pro Liter), beim Strom den Netzmix. Kraftstoffherstellung und Fahrzeugbau sind nicht enthalten."
+  },
+  "charts": {
+    "monthly": "Kosten pro Monat",
+    "electric": "Elektrisch",
+    "petrol": "Benziner",
+    "cumulative": "Kumulierte Ersparnis",
+    "cumulativeNote": "Benzinkosten minus Stromkosten, Monat für Monat aufsummiert.",
+    "per100": "Kosten pro 100 {{unit}} nach Monat",
+    "per100Note": "Monate unter {{distance}} fehlen.",
+    "savings": "Ersparnis",
+    "trips": "Fahrten",
+    "distance": "Strecke"
+  },
+  "table": {
+    "monthly": "Pro Monat",
+    "month": "Monat",
+    "trips": "Fahrten",
+    "distance": "Strecke",
+    "battery": "Akku-Energie",
+    "grid": "Netz-Energie",
+    "cost": "Kosten",
+    "fuel": "Benzin-Äquivalent",
+    "savings": "Ersparnis",
+    "total": "Gesamt",
+    "showAll": "Alle {{count}} Monate anzeigen",
+    "showLess": "Weniger anzeigen"
+  },
+  "categories": {
+    "title": "Pro Kategorie",
+    "note": "Strecke und Stromkosten je Fahrtkategorie. Praktisch, um Dienstfahrten abzurechnen: Die Kostenspalte genügt.",
+    "category": "Kategorie",
+    "Private": "Privat",
+    "Business": "Geschäftlich",
+    "Uncategorized": "Ohne Kategorie",
+    "Uncategorised": "Ohne Kategorie",
+    "empty": "Ohne Kategorie"
+  }
 }

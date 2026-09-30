@@ -1,5 +1,85 @@
 {
   "overline": "Laden",
   "title": "Laden",
-  "lead": "Ladevorgänge, abgeleitet aus dem Ladestand zwischen den Fahrten."
+  "lead": "Ladevorgänge, abgeleitet aus dem Ladestand zwischen den Fahrten, wo du lädst und was das Auto im Stand verliert.",
+  "stats": {
+    "sessions": "Ladevorgänge",
+    "sessionsHint": "mindestens {{gain}} Punkte Zuwachs",
+    "perWeek": "Ladevorgänge pro Woche",
+    "energy": "Geladene Energie (gesch.)",
+    "energyHint": "Batterieseite, ohne Verluste",
+    "socRange": "Durchschnittlicher Ladestand",
+    "socRangeHint": "vorher → nachher",
+    "to90": "Geladen bis 90 % oder mehr",
+    "to90Hint": "Anteil der Ladevorgänge",
+    "gain": "Durchschnittlicher Zuwachs",
+    "points": "Punkte",
+    "gainHint": "Median {{median}} Punkte"
+  },
+  "note": {
+    "title": "So wird es abgeleitet.",
+    "body": "Das Auto meldet keine Ladevorgänge. Beginnt eine Fahrt mit einem höheren Ladestand, als die vorige endete, wurde dazwischen geladen; ein Zuwachs von mindestens {{gain}} Punkten zählt als Ladevorgang. Die angezeigten Zeiten sind nur die Standzeit, nicht die Ladedauer. Lücken mit fehlenden Fahrten im Export bleiben außen vor, weil sich die Ladestandsänderung dort nicht zuordnen lässt.",
+    "capacityMeasured": "Die Energie pro Ladevorgang ist Zuwachs in Punkten × nutzbare Kapazität. Verwendet: {{capacity}} kWh, geschätzt aus deinen letzten Fahrten.",
+    "capacityNominal": "Die Energie pro Ladevorgang ist Zuwachs in Punkten × nutzbare Kapazität. Verwendet: {{capacity}} kWh, der Nennwert aus den Einstellungen (für eine Schätzung fehlen lange Fahrten)."
+  },
+  "sessions": {
+    "title": "Ladevorgänge",
+    "note": "Der Ladestand ist auf ganze Prozent gerundet, einzelne Ladevorgänge sind daher auf etwa einen Punkt genau.",
+    "none": "In diesem Zeitraum wurde kein Ladevorgang gefunden: kein Standzeitraum mit mindestens {{gain}} Punkten Zuwachs und lückenlosen Fahrten davor und danach.",
+    "perMonth": "Ladevorgänge pro Monat",
+    "socTitle": "Ladestand vor und nach dem Laden (%)",
+    "axis": "Ladevorgänge",
+    "before": "Vorher",
+    "after": "Nachher",
+    "tooltipSessions": "{{count}} Ladevorgänge"
+  },
+  "places": {
+    "title": "Wo du lädst",
+    "note": "Ladevorgänge im Abstand von höchstens {{radius}} m gelten als ein Ort. Die Bezeichnung ist die häufigste Adresse.",
+    "table": "Ladeorte",
+    "breakdown": "Energie nach Ort (kWh)",
+    "place": "Ort",
+    "sessions": "Ladevorgänge",
+    "energy": "Energie",
+    "soc": "Stand",
+    "share": "Anteil an der Energie",
+    "home": "wahrscheinlich zu Hause",
+    "unknown": "Unbekannter Ort",
+    "other": "Alle anderen Orte",
+    "more": "{{count}} weitere Orte werden nicht angezeigt."
+  },
+  "recent": {
+    "title": "Letzte Ladevorgänge",
+    "note": "Neueste zuerst. Die letzte Spalte ist die Zeit, die das Auto dort stand.",
+    "parked": "Geparkt",
+    "gain": "Zuwachs",
+    "energy": "Energie",
+    "window": "Standzeit"
+  },
+  "standby": {
+    "title": "Standby-Verlust",
+    "note": "Ladestand, der beim Parken ohne Laden verloren geht, für Standzeiten von mindestens {{hours}} Stunden ohne fehlende Fahrten. Enthalten ist alles, was das Auto von selbst tut: Vorklimatisierung aus der App, Aufwachen und Sicherheitsfunktionen wie ein Wächtermodus.",
+    "none": "In diesem Zeitraum gibt es keine Standzeit von mindestens {{hours}} Stunden ohne Laden und ohne fehlende Fahrten.",
+    "pct": "Standby-Verlust",
+    "pctHint": "verlorene Punkte je Standtag insgesamt",
+    "kwh": "Standby-Energie",
+    "stops": "Gemessene Standzeiten",
+    "stopsHint": "{{days}} Standtage",
+    "median": "Median je Standzeit",
+    "medianHint": "oft 0: die meisten Standzeiten verlieren unter einem Punkt",
+    "distribution": "Verlust je Standzeit nach Rate (% pro Tag)",
+    "axis": "Standzeiten",
+    "tooltipStops": "{{count}} Standzeiten"
+  },
+  "balance": {
+    "title": "Energiebilanz",
+    "note": "Von den Fahrten verbrauchte Energie im Vergleich zur geladenen Energie, jeweils für den gewählten Zeitraum.",
+    "table": "Im gewählten Zeitraum",
+    "used": "Von Fahrten verbraucht (vom Auto gemeldet)",
+    "charged": "Geladen (aus dem Ladestand geschätzt)",
+    "standby": "Im Stand verloren (geschätzt)",
+    "difference": "Geladen minus verbraucht",
+    "explain": "Der Wert für geladene Energie ist auf der Batterieseite gemessen: Zuwachs in Punkten × nutzbare Kapazität. Ladeverluste (Ladegerät, Kabel, Wärme in der Batterie) entstehen davor und sind hier nicht messbar; die Differenz ist deshalb kein Wirkungsgrad. Ladevorgänge in Lücken mit fehlenden Fahrten, Standby-Verluste und Rundung sorgen ebenfalls dafür, dass sie von null abweicht.",
+    "gaps": "{{gaps}} von {{total}} Standzeiten enthalten fehlende Fahrten und sind ausgeschlossen."
+  }
 }

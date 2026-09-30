@@ -1,5 +1,85 @@
 {
   "overline": "Batterie",
   "title": "Batterie",
-  "lead": "Geschätzte nutzbare Kapazität und wie die Batterie genutzt wird."
+  "lead": "Geschätzte nutzbare Kapazität, ihre Entwicklung über die Zeit und wie die Batterie genutzt wird.",
+  "stats": {
+    "capacity": "Nutzbare Kapazität (gesch.)",
+    "capacityHint": "95-%-Bereich {{low}}–{{high}} · {{window}}",
+    "capacityNone": "Noch zu wenige lange Fahrten",
+    "soh": "Gesundheitszustand (gesch.)",
+    "sohHint": "der Nennkapazität von {{nominal}} kWh",
+    "sohAbove": "über Nennwert, siehe Hinweis",
+    "trend": "Kapazitätstrend",
+    "perYear": "kWh/Jahr",
+    "perYearShort": "pro Jahr",
+    "trendClear": "deutlich erkennbar",
+    "trendNoise": "im Rauschen",
+    "trendNone": "noch zu wenig Verlauf",
+    "cycles": "Äquivalente Vollzyklen",
+    "cyclesHint": "{{energy}} kWh Durchsatz",
+    "lowest": "Niedrigster Ladestand",
+    "lowestHint": "am Ende einer Fahrt"
+  },
+  "honest": {
+    "title": "Bitte als Schätzung lesen.",
+    "body": "Die Werte stammen aus den Energie- und Ladestandsangaben des Autos, nicht aus einem Batterietest. Das absolute Niveau kann um einige Prozent danebenliegen: Der angezeigte Ladestand verbirgt einen Puffer und ist auf ganze Prozent gerundet. Ein Wert über 100 % der Nennkapazität ist deshalb möglich und bedeutet nicht, dass die Batterie gewachsen ist. Der Verlauf über mehrere Monate sagt mehr als das Niveau."
+  },
+  "capacity": {
+    "title": "Nutzbare Kapazität",
+    "note": "Pro Fahrt ergibt die verbrauchte Energie geteilt durch die verlorenen Ladestandspunkte eine implizite Kapazität. Es zählen nur Fahrten mit mindestens {{trip}} Punkten Verlust, und ein Monat erscheint erst, wenn seine Fahrten zusammen {{month}} Punkte ergeben. Die Monatswerte sind energiegewichtete Summen, keine Mittelwerte einzelner Fahrten.",
+    "tooLittle": "Noch kein Monat hat genug lange Fahrten (mindestens {{trip}} Ladestandspunkte pro Fahrt und {{month}} Punkte pro Monat). Importiere mehr Verlauf oder fahre ein paar längere Strecken.",
+    "windowDays": "letzte {{days}} Tage",
+    "windowAll": "alle Daten",
+    "monthly": "Geschätzte nutzbare Kapazität pro Monat",
+    "perTrip": "Einzelne Fahrten mit mindestens {{points}} Punkten Verbrauch",
+    "perTripNone": "Keine Fahrt hat {{points}} Ladestandspunkte oder mehr verbraucht.",
+    "trendNote": "Gewichteter Trend über {{months}} Monate: {{slope}} kWh pro Jahr (Standardfehler {{se}}). Eine Steigung unterhalb von etwa dem Doppelten ihres Fehlers lässt sich nicht vom Rauschen unterscheiden."
+  },
+  "chart": {
+    "estimate": "Schätzung",
+    "interval": "95-%-Intervall",
+    "trend": "Trend",
+    "nominal": "Nennwert {{value}} kWh",
+    "basis": "{{points}} Ladestandspunkte aus {{count}} Fahrten",
+    "tripBasis": "{{energy}} kWh über {{points}} Ladestandspunkte"
+  },
+  "basis": {
+    "title": "Grundlage der Schätzung",
+    "nominal": "Nennkapazität (Einstellung)",
+    "recent": "Schätzung, letzte {{days}} Tage",
+    "interval": "95-%-Intervall (nur Stichprobenrauschen)",
+    "overall": "Schätzung, alle Daten",
+    "trips": "Gezählte Fahrten",
+    "points": "Gezählte Ladestandspunkte",
+    "months": "Angezeigte Monate"
+  },
+  "usage": {
+    "title": "Wie die Batterie genutzt wird",
+    "note": "Basis sind die Fahrten des gewählten Zeitraums. Der Ladestand wird zu Beginn und am Ende jeder Fahrt gelesen.",
+    "histogram": "Ladestand bei Fahrtbeginn und Fahrtende (%)",
+    "atStart": "Zu Beginn",
+    "atEnd": "Am Ende",
+    "tripsAxis": "Fahrten",
+    "tripsValue": "{{count}} Fahrten",
+    "facts": "Kennzahlen",
+    "startHigh": "Fahrten, die bei 90 % oder mehr starten",
+    "endLow": "Fahrten, die bei 20 % oder weniger enden",
+    "chargeHigh": "Ladevorgänge bis 90 % oder mehr",
+    "lowest": "Niedrigster Stand am Fahrtende",
+    "day": "Typischer Tag (erster Start → letztes Ende)",
+    "days": "Tage mit Fahrten",
+    "throughput": "Energiedurchsatz",
+    "cycles": "Äquivalente Vollzyklen"
+  },
+  "care": {
+    "title": "Batteriepflege",
+    "note": "Nüchterne Beobachtungen aus deinen Daten. Lithium-Ionen-Zellen altern tendenziell etwas schneller, wenn sie lange bei sehr hohem oder sehr niedrigem Ladestand stehen; im Handbuch steht, welches Ladelimit der Hersteller für den Alltag empfiehlt.",
+    "noSoc": "Die Fahrten dieses Zeitraums enthalten keinen Ladestand, daher gibt es nichts auszuwerten.",
+    "highFew": "{{share}} der Fahrten begannen bei 90 % oder mehr, die Batterie war also selten so voll unterwegs.",
+    "highMany": "{{share}} der Fahrten begannen bei 90 % oder mehr. Wenn du die Reichweite nicht jeden Tag brauchst, würde ein niedrigeres tägliches Ladelimit die Zeit bei hohem Ladestand verkürzen.",
+    "lowFew": "{{share}} der Fahrten endeten bei 20 % oder weniger; der niedrigste erreichte Stand war {{min}} %.",
+    "lowMany": "{{share}} der Fahrten endeten bei 20 % oder weniger; der niedrigste erreichte Stand war {{min}} %. Etwas früheres Laden würde die Batterie öfter aus dem niedrigen Bereich heraushalten.",
+    "chargeHigh": "{{share}} der {{count}} erkannten Ladevorgänge (mindestens {{gain}} Punkte) endeten bei 90 % oder mehr.",
+    "chargeLow": "Nur {{share}} der {{count}} erkannten Ladevorgänge (mindestens {{gain}} Punkte) endeten bei 90 % oder mehr."
+  }
 }

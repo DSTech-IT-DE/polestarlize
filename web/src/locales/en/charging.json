@@ -1,5 +1,85 @@
 {
   "overline": "Charging",
   "title": "Charging",
-  "lead": "Charging sessions derived from the state of charge between trips."
+  "lead": "Charging sessions derived from the state of charge between trips, where you plug in, and what the car loses while parked.",
+  "stats": {
+    "sessions": "Charging sessions",
+    "sessionsHint": "at least {{gain}} points gained",
+    "perWeek": "Sessions per week",
+    "energy": "Energy charged (est.)",
+    "energyHint": "battery side, no losses",
+    "socRange": "Average charge",
+    "socRangeHint": "level before → after",
+    "to90": "Charged to 90 % or more",
+    "to90Hint": "share of sessions",
+    "gain": "Average gain",
+    "points": "points",
+    "gainHint": "median {{median}} points"
+  },
+  "note": {
+    "title": "How this is derived.",
+    "body": "The car does not report charging. When a trip starts at a higher charge level than the previous one ended, the car was charged in between; a gain of at least {{gain}} points counts as a session. The times shown are only how long the car stood there, not how long it charged. Gaps with missing trips in the export are left out, because the change in charge level cannot be attributed then.",
+    "capacityMeasured": "Energy per session is gained points × usable capacity. Used here: {{capacity}} kWh, estimated from your recent trips.",
+    "capacityNominal": "Energy per session is gained points × usable capacity. Used here: {{capacity}} kWh, the nominal value from the settings (too few long trips for an estimate)."
+  },
+  "sessions": {
+    "title": "Sessions",
+    "note": "Charge levels are whole percent, so single sessions are accurate to about one point.",
+    "none": "No charging session found in this period: no parking window with a gain of at least {{gain}} points and complete trips around it.",
+    "perMonth": "Charging sessions per month",
+    "socTitle": "Charge level before and after charging (%)",
+    "axis": "Sessions",
+    "before": "Before",
+    "after": "After",
+    "tooltipSessions": "{{count}} sessions"
+  },
+  "places": {
+    "title": "Where you plug in",
+    "note": "Sessions within {{radius}} m of each other count as one place. The label is the most common address.",
+    "table": "Charging places",
+    "breakdown": "Energy by place (kWh)",
+    "place": "Place",
+    "sessions": "Sessions",
+    "energy": "Energy",
+    "soc": "Level",
+    "share": "Share of energy",
+    "home": "likely home",
+    "unknown": "Unknown location",
+    "other": "All other places",
+    "more": "{{count}} more places not shown."
+  },
+  "recent": {
+    "title": "Latest sessions",
+    "note": "Most recent first. The last column is the time the car stood there.",
+    "parked": "Parked",
+    "gain": "Gain",
+    "energy": "Energy",
+    "window": "Standing time"
+  },
+  "standby": {
+    "title": "Standby drain",
+    "note": "Charge lost while parked without charging, for stops of at least {{hours}} hours without missing trips. It includes everything the car does on its own: climate pre-conditioning from the app, wake-ups, and security features such as a sentry-like mode.",
+    "none": "No parking window of at least {{hours}} hours without charging and without missing trips in this period.",
+    "pct": "Standby loss",
+    "pctHint": "total points lost per parked day",
+    "kwh": "Standby energy",
+    "stops": "Stops measured",
+    "stopsHint": "{{days}} parked days",
+    "median": "Median per stop",
+    "medianHint": "often 0: most stops lose under one point",
+    "distribution": "Loss per stop, by rate (% per day)",
+    "axis": "Stops",
+    "tooltipStops": "{{count}} stops"
+  },
+  "balance": {
+    "title": "Energy balance",
+    "note": "Energy used by trips against energy charged, both for the selected period.",
+    "table": "In the selected period",
+    "used": "Used by trips (reported by the car)",
+    "charged": "Charged (estimated from charge level)",
+    "standby": "Lost while parked (estimated)",
+    "difference": "Charged minus used",
+    "explain": "The charged figure is battery-side: points gained × usable capacity. Charging losses (charger, cable, battery heat) happen before that point and are not measurable here, so do not read the difference as an efficiency. Sessions hidden in missing trips, standby losses and rounding make it differ from zero as well.",
+    "gaps": "{{gaps}} of {{total}} parking windows contain missing trips and are excluded."
+  }
 }
