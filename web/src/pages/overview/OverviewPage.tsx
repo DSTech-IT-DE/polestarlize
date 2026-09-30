@@ -1,10 +1,12 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { capacitySamples, recentCapacity, stateOfHealth } from '../../analytics/battery';
 import { monthlyTotals, totals } from '../../analytics/core';
 import { consumptionPer100 } from '../../domain/trip';
 import { shortAddress } from '../../lib/address';
 import { useFormat } from '../../lib/format';
 import { href } from '../../lib/router';
+import { useSettings } from '../../lib/settings';
 import { useDataset } from '../../store/dataset';
 import { Chart } from '../../ui/chart/Chart';
 import { barStyle, baseOption, categoryAxis, useChartTheme, valueAxis } from '../../ui/chart/theme';
@@ -16,10 +18,13 @@ export default function OverviewPage() {
   const { t } = useTranslation('overview');
   const f = useFormat();
   const theme = useChartTheme();
-  const { trips, loading } = useDataset();
+  const { trips, allTrips, loading } = useDataset();
+  const { usableCapacityKwh } = useSettings();
 
   const sum = useMemo(() => totals(trips), [trips]);
   const months = useMemo(() => monthlyTotals(trips), [trips]);
+  const capacity = useMemo(() => recentCapacity(capacitySamples(allTrips)), [allTrips]);
+  const health = capacity ? stateOfHealth(capacity.capacityKwh, usableCapacityKwh) : null;
   const recent = useMemo(() => trips.slice(-6).reverse(), [trips]);
 
   const distanceOption = useMemo(
@@ -84,11 +89,22 @@ export default function OverviewPage() {
       }
     >
       <Stats>
-        <Stat label={t('distance')} value={f.number(f.distanceValue(sum.distanceKm))} unit={f.distanceUnit} hint={t('tripsCount', { count: sum.trips })} accent />
+        <Stat
+          label={t('distance')}
+          value={f.number(f.distanceValue(sum.distanceKm))}
+          unit={f.distanceUnit}
+          hint={t('tripsOnDays', { trips: t('tripsCount', { count: sum.trips }), days: t('daysCount', { count: sum.activeDays }) })}
+          accent
+        />
         <Stat label={t('energy')} value={f.number(sum.energyKwh)} unit="kWh" />
         <Stat label={t('consumption')} value={sum.consumption == null ? '–' : f.number(f.consumptionValue(sum.consumption), 1)} unit={f.consumptionUnit} />
         <Stat label={t('drivingTime')} value={f.number(sum.drivingMinutes / 60)} unit="h" hint={sum.averageSpeed ? t('avgSpeed', { speed: f.speed(sum.averageSpeed) }) : undefined} />
-        <Stat label={t('activeDays')} value={f.number(sum.activeDays)} hint={t('ofDays', { count: sum.spanDays })} />
+        <Stat
+          label={t('batteryHealth')}
+          value={health == null ? '–' : f.number(health * 100)}
+          unit={health == null ? undefined : '%'}
+          hint={<a href={href('battery')}>{capacity ? t('batteryHint', { kwh: f.number(capacity.capacityKwh, 1) }) : t('batteryUnknown')}</a>}
+        />
         <Stat label={t('odometer')} value={sum.odometerKm == null ? '–' : f.number(f.distanceValue(sum.odometerKm))} unit={f.distanceUnit} />
       </Stats>
 

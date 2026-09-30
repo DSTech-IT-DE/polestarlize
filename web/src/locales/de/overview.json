@@ -9,9 +9,6 @@
   "consumption": "Verbrauch",
   "drivingTime": "Fahrzeit",
   "avgSpeed": "Ø {{speed}} während der Fahrt",
-  "activeDays": "Fahrtage",
-  "ofDays_one": "von {{count}} Tag",
-  "ofDays_other": "von {{count}} Tagen",
   "odometer": "Kilometerstand",
   "tripsCount_one": "{{count}} Fahrt",
   "tripsCount_other": "{{count}} Fahrten",
@@ -22,5 +19,11 @@
   "allTrips": "Alle Fahrten",
   "when": "Start",
   "route": "Strecke",
-  "soc": "Akku"
+  "soc": "Akku",
+  "batteryHealth": "Batterie (geschätzt)",
+  "batteryHint": "{{kwh}} kWh nutzbar · Details",
+  "batteryUnknown": "Braucht längere Fahrten · Details",
+  "tripsOnDays": "{{trips}} an {{days}}",
+  "daysCount_one": "{{count}} Tag",
+  "daysCount_other": "{{count}} Tagen"
 }
