@@ -1,0 +1,23 @@
+# Run with: docker compose up -d   (then open http://localhost:8080)
+services:
+  polestarlize:
+    image: ghcr.io/dstech-it-de/polestarlize:latest
+    # Or build from this checkout instead:
+    # build: .
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - polestarlize-data:/data
+    environment:
+      # Turn the sync server off and serve the web app only.
+      # SYNC_ENABLED: "false"
+      # Behind a reverse proxy (Traefik, nginx, Caddy): use X-Forwarded-For for rate limiting.
+      # TRUST_PROXY: "1"
+      # Let a frontend on another origin (e.g. GitHub Pages) use this server as sync server.
+      # CORS_ORIGINS: "https://dstech-it-de.github.io"
+      # PORT: "8080"
+      TZ: UTC
+
+volumes:
+  polestarlize-data:

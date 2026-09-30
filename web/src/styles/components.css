@@ -454,3 +454,7 @@
 .table-wide {
   min-width: 720px;
 }
+
+.field > .segmented {
+  align-self: flex-start;
+}

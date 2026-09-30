@@ -7,14 +7,17 @@
     "note": "You were given a random ID on your first visit. No name, no e-mail, no password.",
     "id": "Anonymous ID",
     "copy": "Copy",
-    "copied": "Copied",
-    "localOnly": "This site stores your trips only in this browser. Keep the ID and download a backup to move your data to another device."
+    "copied": "Copied"
   },
   "display": {
     "title": "Display",
     "language": "Language",
     "theme": "Theme",
-    "themes": { "system": "System", "light": "Light", "dark": "Dark" },
+    "themes": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
     "units": "Distance unit",
     "km": "Kilometres",
     "mi": "Miles"

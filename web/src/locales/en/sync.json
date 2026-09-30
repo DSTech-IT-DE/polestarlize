@@ -1,0 +1,61 @@
+{
+  "status": {
+    "syncing": "Syncing…",
+    "synced": "Synced {{when}}",
+    "syncedNow": "Synced just now",
+    "neverSynced": "Not synced yet",
+    "error": "Sync failed",
+    "offline": "Offline",
+    "title": "Sync with {{server}}. Click to sync now.",
+    "errorTitle": "Sync failed: {{error}}. Click to try again."
+  },
+  "account": {
+    "keyWarning": "This ID is the key to your data, like a password. Anyone who knows it can read your trips on the sync server. Do not share it publicly.",
+    "modeServer": "Sync is on. Your trips are stored on {{server}} under a hash of this ID and are kept in step in every browser that uses the same ID.",
+    "modeServerSyncing": "Sync is on, connecting to {{server}}.",
+    "modeLocal": "No sync server is in use. Your trips stay in this browser only. To move them to another device, download a backup file and import it there.",
+    "justNow": "just now",
+    "lastSync": "Last sync: {{when}}.",
+    "lastSyncError": "Last attempt failed: {{error}}",
+    "syncNow": "Sync now",
+    "syncing": "Syncing…",
+    "idActions": "Change ID",
+    "useOther": "Use a different ID",
+    "createNew": "Create new ID",
+    "existingId": "Existing ID",
+    "existingIdPlaceholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "invalidId": "This is not a valid ID. Expected format: 8-4-4-4-12 hexadecimal characters.",
+    "sameId": "This is already your ID.",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "confirmServer_one": "The {{count}} trip stored in this browser is removed here and replaced by the trips the server holds under the new ID. Trips under your current ID stay on the server.",
+    "confirmServer_other": "The {{count}} trips stored in this browser are removed here and replaced by the trips the server holds under the new ID. Trips under your current ID stay on the server.",
+    "confirmLocal_one": "The {{count}} trip stored in this browser is removed. Without a sync server the trips of another ID cannot be loaded, only a backup file brings them back. Download a backup first if you still need this data.",
+    "confirmLocal_other": "The {{count}} trips stored in this browser are removed. Without a sync server the trips of another ID cannot be loaded, only a backup file brings them back. Download a backup first if you still need this data.",
+    "confirmUse": "Switch to this ID",
+    "confirmCreate": "Create and switch",
+    "switched": "ID changed.",
+    "server": {
+      "title": "Sync server",
+      "note": "Optional. Leave empty to use the server this page is served from, if there is one. A server you host yourself has to list this site in its CORS_ORIGINS setting.",
+      "label": "Server URL",
+      "placeholder": "https://sync.example.org",
+      "test": "Test",
+      "testing": "Testing…",
+      "save": "Save",
+      "saved": "Saved.",
+      "testOk": "Reachable, version {{version}}, sync is enabled.",
+      "testNoSync": "Reachable, but sync is disabled on that server.",
+      "testFailed": "Not reachable: {{reason}}",
+      "invalidUrl": "This is not a valid http or https URL."
+    },
+    "delete": {
+      "title": "Data on the server",
+      "note": "Removes every trip stored on the server under this ID. The copy in this browser stays; it is not uploaded again unless you import it again.",
+      "button": "Delete my data on the server",
+      "confirm": "Yes, delete it on the server",
+      "done": "The data on the server was deleted.",
+      "failed": "Could not delete: {{reason}}"
+    }
+  }
+}

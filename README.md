@@ -55,6 +55,7 @@ docker compose up -d
 ```
 
 Then open <http://localhost:8080>. Put a reverse proxy with TLS in front of it if it is reachable from the internet.
+`latest` is the newest release; `edge` follows the `main` branch. To build the image yourself: `docker build -t polestarlize .`
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
@@ -94,6 +95,11 @@ server/  Optional sync server (Hono, node:sqlite) that also serves the built app
 
 Copy `web/src/locales/en` to `web/src/locales/<code>`, translate the JSON files and add the language to
 `LANGUAGES` in `web/src/i18n/index.ts`. Code and comments stay in English.
+
+### GitHub Pages
+
+The workflow `.github/workflows/pages.yml` deploys `main` to GitHub Pages. Enable it once under
+*Settings → Pages → Build and deployment → Source: GitHub Actions*.
 
 ### Releases
 

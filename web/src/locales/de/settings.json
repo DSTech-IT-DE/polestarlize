@@ -7,14 +7,17 @@
     "note": "Beim ersten Besuch hast du eine zufällige ID bekommen. Kein Name, keine E-Mail, kein Passwort.",
     "id": "Anonyme ID",
     "copy": "Kopieren",
-    "copied": "Kopiert",
-    "localOnly": "Diese Seite speichert deine Fahrten nur in diesem Browser. Merk dir die ID und lade ein Backup herunter, um deine Daten auf ein anderes Gerät zu übertragen."
+    "copied": "Kopiert"
   },
   "display": {
     "title": "Darstellung",
     "language": "Sprache",
     "theme": "Farbschema",
-    "themes": { "system": "System", "light": "Hell", "dark": "Dunkel" },
+    "themes": {
+      "system": "System",
+      "light": "Hell",
+      "dark": "Dunkel"
+    },
     "units": "Entfernungseinheit",
     "km": "Kilometer",
     "mi": "Meilen"

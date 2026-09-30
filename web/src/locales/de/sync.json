@@ -1,0 +1,61 @@
+{
+  "status": {
+    "syncing": "Synchronisiere …",
+    "synced": "Synchronisiert {{when}}",
+    "syncedNow": "Gerade synchronisiert",
+    "neverSynced": "Noch nicht synchronisiert",
+    "error": "Sync fehlgeschlagen",
+    "offline": "Offline",
+    "title": "Synchronisierung mit {{server}}. Klicken, um jetzt zu synchronisieren.",
+    "errorTitle": "Sync fehlgeschlagen: {{error}}. Klicken, um es erneut zu versuchen."
+  },
+  "account": {
+    "keyWarning": "Diese ID ist der Schlüssel zu deinen Daten, wie ein Passwort. Wer sie kennt, kann deine Fahrten auf dem Sync-Server lesen. Gib sie nicht öffentlich weiter.",
+    "modeServer": "Die Synchronisierung ist aktiv. Deine Fahrten liegen auf {{server}} unter einem Hash dieser ID und werden in jedem Browser abgeglichen, der dieselbe ID nutzt.",
+    "modeServerSyncing": "Die Synchronisierung ist aktiv, Verbindung zu {{server}} wird aufgebaut.",
+    "modeLocal": "Es wird kein Sync-Server verwendet. Deine Fahrten bleiben nur in diesem Browser. Um sie auf ein anderes Gerät zu übertragen, lade eine Backup-Datei herunter und importiere sie dort.",
+    "justNow": "gerade eben",
+    "lastSync": "Letzte Synchronisierung: {{when}}.",
+    "lastSyncError": "Letzter Versuch fehlgeschlagen: {{error}}",
+    "syncNow": "Jetzt synchronisieren",
+    "syncing": "Synchronisiere …",
+    "idActions": "ID ändern",
+    "useOther": "Andere ID verwenden",
+    "createNew": "Neue ID erzeugen",
+    "existingId": "Vorhandene ID",
+    "existingIdPlaceholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "invalidId": "Das ist keine gültige ID. Erwartet wird das Format 8-4-4-4-12 Hexadezimalzeichen.",
+    "sameId": "Das ist bereits deine ID.",
+    "continue": "Weiter",
+    "cancel": "Abbrechen",
+    "confirmServer_one": "Die {{count}} in diesem Browser gespeicherte Fahrt wird hier entfernt und durch die Fahrten ersetzt, die der Server unter der neuen ID hält. Fahrten unter deiner aktuellen ID bleiben auf dem Server.",
+    "confirmServer_other": "Die {{count}} in diesem Browser gespeicherten Fahrten werden hier entfernt und durch die Fahrten ersetzt, die der Server unter der neuen ID hält. Fahrten unter deiner aktuellen ID bleiben auf dem Server.",
+    "confirmLocal_one": "Die {{count}} in diesem Browser gespeicherte Fahrt wird entfernt. Ohne Sync-Server lassen sich die Fahrten einer anderen ID nicht laden, nur eine Backup-Datei bringt sie zurück. Lade vorher ein Backup herunter, wenn du diese Daten noch brauchst.",
+    "confirmLocal_other": "Die {{count}} in diesem Browser gespeicherten Fahrten werden entfernt. Ohne Sync-Server lassen sich die Fahrten einer anderen ID nicht laden, nur eine Backup-Datei bringt sie zurück. Lade vorher ein Backup herunter, wenn du diese Daten noch brauchst.",
+    "confirmUse": "Zu dieser ID wechseln",
+    "confirmCreate": "Erzeugen und wechseln",
+    "switched": "ID geändert.",
+    "server": {
+      "title": "Sync-Server",
+      "note": "Optional. Leer lassen, um den Server zu verwenden, von dem diese Seite ausgeliefert wird, falls es einen gibt. Ein selbst betriebener Server muss diese Seite in seiner Einstellung CORS_ORIGINS eintragen.",
+      "label": "Server-URL",
+      "placeholder": "https://sync.example.org",
+      "test": "Testen",
+      "testing": "Teste …",
+      "save": "Speichern",
+      "saved": "Gespeichert.",
+      "testOk": "Erreichbar, Version {{version}}, Synchronisierung ist aktiviert.",
+      "testNoSync": "Erreichbar, aber die Synchronisierung ist auf diesem Server deaktiviert.",
+      "testFailed": "Nicht erreichbar: {{reason}}",
+      "invalidUrl": "Das ist keine gültige http- oder https-URL."
+    },
+    "delete": {
+      "title": "Daten auf dem Server",
+      "note": "Entfernt alle Fahrten, die unter dieser ID auf dem Server liegen. Die Kopie in diesem Browser bleibt erhalten und wird nicht erneut hochgeladen, solange du sie nicht erneut importierst.",
+      "button": "Meine Daten auf dem Server löschen",
+      "confirm": "Ja, auf dem Server löschen",
+      "done": "Die Daten auf dem Server wurden gelöscht.",
+      "failed": "Löschen nicht möglich: {{reason}}"
+    }
+  }
+}
