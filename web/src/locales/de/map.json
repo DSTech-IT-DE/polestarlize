@@ -1,0 +1,91 @@
+{
+  "overline": "Karte & Orte",
+  "title": "Karte & Orte",
+  "lead": "Wo du warst und zu welchen Orten du immer wieder zurückkehrst. Orte entstehen, indem Start- und Endpunkte im Umkreis von etwa 150 m zusammengefasst werden. Das Auto speichert pro Fahrt nur diese beiden Punkte, nicht den Weg dazwischen.",
+  "home": "Zuhause",
+  "work": "Arbeit",
+  "fit": "Ansicht zurücksetzen",
+  "showTrips": "Fahrten anzeigen",
+  "layers": {
+    "label": "Kartenebenen",
+    "places": "Orte",
+    "heat": "Heatmap der Start- und Endpunkte",
+    "lines": "Fahrtlinien"
+  },
+  "legend": {
+    "other": "Anderer Ort (Größe = Besuche)",
+    "lines": "Linien verbinden Start und Ziel einer Fahrt, es ist nicht die gefahrene Strecke."
+  },
+  "map": {
+    "title": "Karte deiner Fahrten",
+    "zoomIn": "Hineinzoomen",
+    "zoomOut": "Herauszoomen",
+    "closePopup": "Schließen",
+    "attribution": "Quellenangaben anzeigen",
+    "gestureWindows": "Mit Strg + Scrollen zoomst du die Karte",
+    "gestureMac": "Mit ⌘ + Scrollen zoomst du die Karte",
+    "gestureMobile": "Mit zwei Fingern bewegst du die Karte"
+  },
+  "consent": {
+    "title": "Karte laden?",
+    "body": "Der Kartenhintergrund kommt von OpenFreeMap (openfreemap.org). Beim Laden gehen Anfragen an deren Server, die deine IP-Adresse und den angezeigten Kartenausschnitt sehen. Deine Fahrten, Adressen und Koordinaten werden nirgendwohin gesendet.",
+    "local": "Alles andere auf dieser Seite funktioniert auch ohne Karte.",
+    "load": "Karte laden",
+    "remember": "Meine Auswahl merken"
+  },
+  "noCoords": {
+    "title": "Keine Koordinaten",
+    "body": "Die Fahrten in diesem Zeitraum haben keine GPS-Koordinaten, daher gibt es nichts auf der Karte zu zeigen."
+  },
+  "stats": {
+    "title": "Überblick",
+    "note": "Länder und Orte stammen aus dem Adresstext, Entfernungen aus den Koordinaten.",
+    "places": "Orte",
+    "homeHint": "Zuhause: {{place}}",
+    "noHome": "Zuhause nicht erkennbar",
+    "towns": "Städte",
+    "countries": "Länder",
+    "farthest": "Am weitesten von zu Hause",
+    "farthestHint": "{{place}}",
+    "needsHome": "braucht ein erkanntes Zuhause",
+    "homeWork": "Zuhause – Arbeit",
+    "airLine": "Luftlinie",
+    "needsWork": "kein regelmäßiger Arbeitsort gefunden"
+  },
+  "places": {
+    "title": "Orte",
+    "note": "Zuhause ist der Ort, an dem das Auto am häufigsten den Tag beendet. Arbeit ist ein Ort, den du werktags tagsüber erreichst und an dem du mindestens vier Stunden bleibst, an mindestens fünf Tagen. Beides sind Schätzungen und bleiben leer, wenn nichts klar heraussticht.",
+    "all": "{{count}} Orte anzeigen",
+    "fewer": "Weniger anzeigen"
+  },
+  "col": {
+    "place": "Ort",
+    "town": "Stadt",
+    "visits": "Besuche",
+    "dwell": "Übliche Standzeit",
+    "share": "Fahrten",
+    "first": "Erster",
+    "last": "Letzter"
+  },
+  "routes": {
+    "title": "Häufige Strecken",
+    "note": "Ortspaare, zwischen denen du fährst. Der Verbrauch zählt nur Fahrten mit Energieangabe. Fahrten mit gleichem Start und Ziel sind nicht aufgeführt.",
+    "mode": "Richtung",
+    "directed": "Eine Richtung",
+    "combined": "Beide Richtungen",
+    "none": "Keine Strecke wurde mindestens zweimal gefahren.",
+    "route": "Strecke",
+    "trips": "Fahrten",
+    "distance": "Ø Strecke",
+    "consumption": "Ø Verbrauch",
+    "duration": "Ø Dauer"
+  },
+  "geo": {
+    "title": "Länder und Orte",
+    "note": "Gezählt nach Ankünften an einer Adresse in diesem Land bzw. Ort.",
+    "country": "Land",
+    "town": "Stadt",
+    "arrivals": "Ankünfte",
+    "moreTowns": "und {{count}} weitere Orte"
+  }
+}

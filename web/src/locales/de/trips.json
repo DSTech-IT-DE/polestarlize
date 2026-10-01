@@ -1,0 +1,66 @@
+{
+  "overline": "Fahrten",
+  "title": "Fahrten",
+  "lead": "Alle Fahrten im gewählten Zeitraum. Durchsuche und filtere sie und exportiere das Ergebnis im Journey-Log-Format, zum Beispiel als Fahrtenbuch mit privaten und dienstlichen Fahrten.",
+  "export": "{{count}} Fahrten exportieren (CSV)",
+  "list": "Fahrten",
+  "range": "{{from}}–{{to}} von {{total}}",
+  "none": "Keine Fahrt entspricht dem Filter.",
+  "toggle": "Details anzeigen",
+  "commentShort": "Notiz",
+  "filter": {
+    "search": "Suche",
+    "searchPlaceholder": "Adresse oder Kommentar",
+    "category": "Kategorie",
+    "type": "Fahrtentyp",
+    "all": "Alle",
+    "minDistance": "Mindestdistanz ({{unit}})",
+    "reset": "Filter zurücksetzen",
+    "place": "Zeigt Fahrten, die an {{place}} beginnen oder enden.",
+    "placeUnknown": "Der verlinkte Ort existiert in diesem Zeitraum nicht. Orte werden pro gewähltem Zeitraum neu berechnet, der Link kann daher veraltet sein."
+  },
+  "category": {
+    "private": "Privat",
+    "business": "Geschäftlich",
+    "uncategorized": "Nicht kategorisiert",
+    "other": "Sonstige",
+    "none": "–"
+  },
+  "type": {
+    "single": "Einzelfahrt",
+    "merged": "Zusammengeführt",
+    "mergedShort": "Zusammengeführt"
+  },
+  "summary": {
+    "trips": "Fahrten",
+    "ofAll": "von {{count}} im Zeitraum",
+    "distance": "Strecke",
+    "energy": "Energie",
+    "consumption": "Verbrauch",
+    "split": "Strecke nach Kategorie"
+  },
+  "col": {
+    "when": "Start",
+    "duration": "Dauer",
+    "route": "Route",
+    "distance": "Strecke",
+    "energy": "Energie",
+    "consumption": "Verbrauch",
+    "soc": "SOC",
+    "category": "Kategorie"
+  },
+  "details": {
+    "from": "Von",
+    "to": "Nach",
+    "time": "Zeit",
+    "avgSpeed": "Durchschnittsgeschwindigkeit {{speed}}",
+    "odometer": "Kilometerstand",
+    "socUsed": "{{used}} % der Batterie verbraucht ({{from}} → {{to}} %)",
+    "comment": "Kommentar"
+  },
+  "pager": {
+    "label": "Seiten",
+    "prev": "Zurück",
+    "next": "Weiter"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "overline": "Import",
+  "title": "Journey-Log-Exporte importieren",
+  "lead": "Zieh die .csv- oder .xlsx-Datei hierher, die dir die Polestar-App geschickt hat. Neue Exporte kannst du jederzeit nachladen – es kommen nur neue oder geänderte Fahrten hinzu.",
+  "drop": "Exportdateien hier ablegen",
+  "reading": "Dateien werden gelesen …",
+  "accepted": "Journey-Log als .csv oder .xlsx, auch mehrere auf einmal, oder ein polestarlize-Backup (.json).",
+  "choose": "Dateien auswählen",
+  "demo": "Stattdessen Demodaten laden",
+  "result": {
+    "title_one": "{{count}} neue Fahrt importiert.",
+    "title_other": "{{count}} neue Fahrten importiert.",
+    "detail": "{{updated}} aktualisiert, {{unchanged}} schon bekannt, {{replaced}} durch zusammengeführte Fahrten ersetzt. Insgesamt {{total}} Fahrten gespeichert.",
+    "skipped_one": "{{count}} Zeile war nicht lesbar und wurde übersprungen.",
+    "skipped_other": "{{count}} Zeilen waren nicht lesbar und wurden übersprungen.",
+    "view": "Zur Übersicht →"
+  },
+  "error": {
+    "not-journey-log": "Das sieht nicht nach einem Journey-Log-Export aus – Startdatum, Enddatum oder Strecke fehlen.",
+    "empty": "Die Datei enthält keine Fahrten.",
+    "unreadable": "Die Datei konnte nicht gelesen werden. Ist es eine .csv oder .xlsx aus der Journey-Log-App?"
+  },
+  "how": {
+    "title": "So bekommst du einen Export",
+    "step1": "Öffne im Polestar die App „Journey Log“ (je nach Softwarestand auch in der Polestar-App).",
+    "step2": "Wähle den gewünschten Zeitraum und tippe auf „Exportieren“.",
+    "step3": "Gib deine E-Mail-Adresse ein. Du bekommst eine .csv- und eine .xlsx-Datei mit gleichem Inhalt.",
+    "step4": "Importiere eine der beiden Dateien hier. Nächsten Monat einfach den neuen Export oben drauf laden."
+  },
+  "incremental": {
+    "title": "Inkrementell und überschneidungssicher",
+    "body": "Fahrten werden an Startzeit und Kilometerstand erkannt. Überlappende Exporte erzeugen keine Duplikate. Hast du Fahrten in der App bearbeitet – Kategorie geändert, Kommentar ergänzt oder Fahrten zusammengeführt – gewinnt der neuere Export."
+  },
+  "privacy": "Die Dateien werden in deinem Browser gelesen. Es wird nichts übertragen, solange in den Einstellungen kein Sync-Server aktiv ist.",
+  "history": {
+    "title": "Import-Verlauf",
+    "when": "Importiert",
+    "files": "Dateien",
+    "range": "Fahrten von – bis",
+    "added": "Neu",
+    "updated": "Aktualisiert",
+    "replaced": "Ersetzt"
+  }
+}

@@ -1,0 +1,46 @@
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: 20px 28px;
+  align-items: start;
+}
+
+.input-suffix {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input-suffix .input {
+  width: 120px;
+}
+
+.input-suffix .muted {
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.account-id {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin: 8px 0 10px;
+}
+
+.account-id code {
+  font-size: clamp(13px, 1.6vw, 17px);
+  letter-spacing: 0.02em;
+  padding: 6px 10px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius);
+  word-break: break-all;
+}
+
+.prose {
+  display: grid;
+  gap: 10px;
+  max-width: 72ch;
+  color: var(--ink-2);
+  font-size: 14px;
+}

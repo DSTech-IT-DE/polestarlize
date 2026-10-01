@@ -1,0 +1,65 @@
+{
+  "overline": "Settings & account",
+  "title": "Settings",
+  "lead": "Your anonymous ID, display preferences, vehicle and prices used for the analyses.",
+  "account": {
+    "title": "Your ID",
+    "note": "You were given a random ID on your first visit. No name, no e-mail, no password.",
+    "id": "Anonymous ID",
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+  "display": {
+    "title": "Display",
+    "language": "Language",
+    "theme": "Theme",
+    "themes": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "units": "Distance unit",
+    "km": "Kilometres",
+    "mi": "Miles"
+  },
+  "vehicle": {
+    "title": "Vehicle",
+    "note": "The usable battery capacity of a new car is the 100 % reference for the battery health estimate.",
+    "model": "Model",
+    "custom": "Other / custom value",
+    "capacity": "Usable capacity when new",
+    "capacityHint": "Approximate public figures; enter your own if you know better."
+  },
+  "prices": {
+    "title": "Prices",
+    "note": "Used on the costs page. All prices per kWh charged.",
+    "currency": "Currency",
+    "home": "Home charging",
+    "public": "Public charging",
+    "homeShare": "Share charged at home",
+    "homeShareHint": "Rough share of energy charged at home.",
+    "fuel": "Petrol price",
+    "fuelConsumption": "Comparison car consumption",
+    "chargingLoss": "Charging loss",
+    "chargingLossHint": "Energy lost between wall plug and battery. Typically 8 to 15 %.",
+    "gridCo2": "Grid CO₂ intensity",
+    "gridCo2Hint": "Average emissions per kWh of electricity. The German mix is roughly 380 g/kWh."
+  },
+  "data": {
+    "title": "Your data",
+    "note_one": "{{count}} trip stored.",
+    "note_other": "{{count}} trips stored.",
+    "backup": "Download backup",
+    "csv": "Export as Journey Log CSV",
+    "delete": "Delete all trips",
+    "deleteConfirm_one": "Really delete {{count}} trip",
+    "deleteConfirm_other": "Really delete {{count}} trips",
+    "cancel": "Cancel"
+  },
+  "privacy": {
+    "title": "Privacy",
+    "p1": "Exports are read and analysed entirely in your browser and stored in its local database (IndexedDB). A single first-party cookie holds your anonymous ID; it is required for the site to work and is never used for tracking. There is no analytics and no advertising.",
+    "p2": "The map loads tiles from OpenFreeMap only after you allow it on the map page; their servers then see your IP address.",
+    "p3": "If a sync server is enabled (self-hosted Docker installation), your trips are stored there under a hash of your ID. Anyone who knows your ID can read these trips, so treat it like a password."
+  }
+}

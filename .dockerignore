@@ -1,0 +1,16 @@
+.git
+.github
+.gitignore
+**/node_modules
+**/dist
+**/coverage
+**/*.log
+data
+*.sqlite
+*.db
+.env
+.env.*
+Dockerfile
+.dockerignore
+docker-compose.yml
+web/.vite

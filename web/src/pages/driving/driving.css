@@ -1,0 +1,108 @@
+.dc-ramp {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.dc-ramp i {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--swatch);
+}
+
+.dc-ramp .dc-ramp-steps {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.dc-caption {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  max-width: 72ch;
+}
+
+.dc-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* The calendar needs about 53 columns of room; narrow screens scroll inside the panel. */
+.dc-scroll {
+  overflow-x: auto;
+}
+
+.dc-scroll > div {
+  min-width: 720px;
+}
+
+.dc-bars {
+  display: grid;
+  gap: 14px;
+}
+
+.dc-bar-row {
+  display: grid;
+  gap: 5px;
+}
+
+.dc-bar-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13.5px;
+}
+
+.dc-bar-head .num {
+  color: var(--ink-2);
+}
+
+.dc-stats {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+}
+
+@media (min-width: 1000px) {
+  .dc-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.dc-records td:first-child {
+  min-width: 190px;
+}
+
+.dc-records td small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.dc-records a {
+  color: var(--ink);
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 3px;
+}
+
+.dc-records a:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* Grid items must be allowed to shrink below the calendar's minimum width and the tables. */
+.grid > .panel {
+  min-width: 0;
+}
+
+.dc-scroll {
+  max-width: 100%;
+}

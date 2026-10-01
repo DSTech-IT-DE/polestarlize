@@ -1,0 +1,54 @@
+.bc-cell-meter {
+  display: grid;
+  grid-template-columns: minmax(48px, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-width: 110px;
+}
+
+.bc-place {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+
+.bc-note {
+  margin-top: 16px;
+}
+
+.grid > .panel-flush > .panel-title {
+  padding: 16px 20px 0;
+  margin-bottom: 8px;
+}
+
+.bc-facts td:first-child {
+  color: var(--ink-2);
+}
+
+.bc-facts td.num {
+  font-weight: 500;
+}
+
+.bc-facts tr.bc-total td {
+  border-top: 1px solid var(--rule-strong);
+  font-weight: 600;
+}
+
+.bc-places {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.bc-places > .panel-flush > .panel-title {
+  padding: 16px 20px 0;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 1500px) {
+  .bc-places {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

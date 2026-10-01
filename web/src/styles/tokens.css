@@ -1,0 +1,105 @@
+/*
+ * Design tokens. Every colour used in the UI and in charts comes from here.
+ * Chart series colours are validated for colour-vision deficiencies on both
+ * surfaces (see docs/design.md).
+ */
+:root {
+  color-scheme: light;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-condensed: 'IBM Plex Sans Condensed', 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --bg: #f1efea;
+  --surface: #fbfaf8;
+  --surface-sunken: #e9e6df;
+  --ink: #16181a;
+  --ink-2: #45494d;
+  --muted: #6b6f73;
+  --rule: #d9d5cc;
+  --rule-strong: #b9b4a9;
+  --accent: #b06e10;
+  --accent-ink: #8a5408;
+  --accent-soft: #f3e3c7;
+  --focus: #2a6fcc;
+
+  --series-1: #b06e10;
+  --series-2: #2a6fcc;
+  --series-3: #c2477a;
+  /* Sequential amber ramp, light → dark. */
+  --seq-0: #f6ecdb;
+  --seq-1: #ecd2a4;
+  --seq-2: #deb06a;
+  --seq-3: #c98d33;
+  --seq-4: #a8690c;
+  --seq-5: #764805;
+
+  --good: #2d7a3e;
+  --warning: #a86a00;
+  --critical: #b3372b;
+
+  --radius: 3px;
+  --gutter: clamp(16px, 3vw, 40px);
+  --sidebar-width: 232px;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0f1113;
+  --surface: #16191c;
+  --surface-sunken: #0b0c0e;
+  --ink: #e8e6e1;
+  --ink-2: #c4c1bb;
+  --muted: #8c9196;
+  --rule: #2a2e33;
+  --rule-strong: #3d4248;
+  --accent: #d6962e;
+  --accent-ink: #e5ad55;
+  --accent-soft: #3a2a12;
+  --focus: #4a8deb;
+
+  --series-1: #c4851c;
+  --series-2: #4a8deb;
+  --series-3: #d65a8e;
+  --seq-0: #2a2115;
+  --seq-1: #4a3514;
+  --seq-2: #7a5516;
+  --seq-3: #a8731c;
+  --seq-4: #d09430;
+  --seq-5: #f0c77a;
+
+  --good: #5cae6c;
+  --warning: #d9a03a;
+  --critical: #e0705f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #0f1113;
+    --surface: #16191c;
+    --surface-sunken: #0b0c0e;
+    --ink: #e8e6e1;
+    --ink-2: #c4c1bb;
+    --muted: #8c9196;
+    --rule: #2a2e33;
+    --rule-strong: #3d4248;
+    --accent: #d6962e;
+    --accent-ink: #e5ad55;
+    --accent-soft: #3a2a12;
+    --focus: #4a8deb;
+
+    --series-1: #c4851c;
+    --series-2: #4a8deb;
+    --series-3: #d65a8e;
+    --seq-0: #2a2115;
+    --seq-1: #4a3514;
+    --seq-2: #7a5516;
+    --seq-3: #a8731c;
+    --seq-4: #d09430;
+    --seq-5: #f0c77a;
+
+    --good: #5cae6c;
+    --warning: #d9a03a;
+    --critical: #e0705f;
+  }
+}

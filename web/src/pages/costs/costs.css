@@ -1,0 +1,62 @@
+.dc-assume {
+  display: grid;
+  gap: 16px;
+}
+
+.dc-assume-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 16px 28px;
+}
+
+.dc-assume-inputs .field {
+  display: grid;
+  gap: 6px;
+}
+
+.dc-assume-inputs .input-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dc-assume-inputs .input {
+  width: 110px;
+}
+
+.dc-assume-inputs .muted {
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.dc-assume-derived {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 24px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.dc-assume-derived a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+  text-decoration-color: var(--accent);
+  white-space: nowrap;
+}
+
+.dc-foot td,
+.dc-foot th {
+  font-weight: 600;
+  border-top: 1px solid var(--rule-strong);
+}
+
+.dc-more {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  border-top: 1px solid var(--rule);
+}
