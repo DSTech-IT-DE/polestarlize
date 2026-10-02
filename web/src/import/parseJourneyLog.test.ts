@@ -7,8 +7,8 @@ import { JourneyLogFormatError, parseCsv, parseXlsx } from './parseJourneyLog';
 import { parseLocalDate, parseNumber } from './values';
 
 const SAMPLE = `﻿Start Date,End Date,Start Address,End Address,Distance in KM,Consumption in Kwh,Category,Start Latitude,Start Longitude,End Latitude,End Longitude,Start Odometer,End Odometer,Trip Type,SOC Source,SOC Destination,Comments
-"2026-09-10, 15:04","2026-09-10, 15:08","Street 1, 12345 Town, Germany","Street 2, 12345 Town, Germany","4","1.415","Private","52.46","8.68","52.44","8.66","49276","49280","SINGLE","70","68",""
-"2026-02-11, 06:40","2026-02-13, 11:51","Street 1, 12345 Town, Germany","Other 3, 12346 City, Germany","125","0","Uncategorized","52.46","8.68","52.32","8.61","34325","34450","MERGED","73","60","note"
+"2026-09-10, 15:04","2026-09-10, 15:08","Street 1, 12345 Town, Germany","Street 2, 12345 Town, Germany","4","1.415","Private","57.70","11.97","57.71","11.95","21500","21504","SINGLE","70","68",""
+"2026-01-05, 07:10","2026-01-07, 12:21","Street 1, 12345 Town, Germany","Other 3, 12346 City, Germany","125","0","Uncategorized","57.70","11.97","57.78","11.81","12000","12125","MERGED","73","60","note"
 `;
 
 function buildXlsx(rows: (string | number)[][]): Uint8Array {
@@ -62,7 +62,7 @@ describe('parseCsv', () => {
     expect(skipped).toBe(0);
     expect(trips).toHaveLength(2);
     expect(trips[0]).toEqual({
-      id: '2026-09-10T15:04|49276',
+      id: '2026-09-10T15:04|21500',
       start: '2026-09-10T15:04',
       end: '2026-09-10T15:08',
       startAddress: 'Street 1, 12345 Town, Germany',
@@ -70,12 +70,12 @@ describe('parseCsv', () => {
       distanceKm: 4,
       energyKwh: 1.415,
       category: 'Private',
-      startLat: 52.46,
-      startLon: 8.68,
-      endLat: 52.44,
-      endLon: 8.66,
-      startOdometerKm: 49276,
-      endOdometerKm: 49280,
+      startLat: 57.7,
+      startLon: 11.97,
+      endLat: 57.71,
+      endLon: 11.95,
+      startOdometerKm: 21500,
+      endOdometerKm: 21504,
       tripType: 'SINGLE',
       socStart: 70,
       socEnd: 68,
@@ -90,7 +90,7 @@ describe('parseCsv', () => {
     const { trips, unit } = parseCsv(SAMPLE.replace('Distance in KM', 'Distance in Mile'));
     expect(unit).toBe('mi');
     expect(trips[0].distanceKm).toBeCloseTo(6.44, 2);
-    expect(trips[0].startOdometerKm).toBe(Math.round(49276 * 1.609344));
+    expect(trips[0].startOdometerKm).toBe(Math.round(21500 * 1.609344));
   });
 
   it('rejects files that are not Journey Log exports', () => {
@@ -115,11 +115,11 @@ describe('parseXlsx', () => {
   it('reads shared strings and numeric cells', () => {
     const xlsx = buildXlsx([
       ['Start Date', 'End Date', 'Start Address', 'End Address', 'Distance in KM', 'Consumption in Kwh', 'Category', 'Start Odometer', 'SOC Source', 'SOC Destination'],
-      ['2026-09-10, 15:04', '2026-09-10, 15:08', 'A & B', 'C', 4, 1.415, 'Private', 49276, 70, 68],
+      ['2026-09-10, 15:04', '2026-09-10, 15:08', 'A & B', 'C', 4, 1.415, 'Private', 21500, 70, 68],
     ]);
     const { trips } = parseXlsx(xlsx);
     expect(trips).toHaveLength(1);
-    expect(trips[0]).toMatchObject({ startAddress: 'A & B', distanceKm: 4, energyKwh: 1.415, startOdometerKm: 49276, socStart: 70 });
+    expect(trips[0]).toMatchObject({ startAddress: 'A & B', distanceKm: 4, energyKwh: 1.415, startOdometerKm: 21500, socStart: 70 });
   });
 
   it('reports broken files', () => {
