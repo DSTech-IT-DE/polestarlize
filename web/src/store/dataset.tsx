@@ -1,15 +1,25 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react';
+import { checkTrips, type TripCheck } from '../analytics/plausibility';
 import type { StoredTrip } from '../domain/trip';
+import { useSettings } from '../lib/settings';
 import { useAllTrips } from './useTrips';
 
 /** `all`, `30d`, `90d`, `12m` or a calendar year like `2026`. */
 export type Period = string;
 
 interface Dataset {
-  /** Trips inside the selected period, oldest first. */
+  /** Counted trips inside the selected period, oldest first. Excluded and unreviewed suspicious trips are left out. */
   trips: StoredTrip[];
-  /** Every stored trip, oldest first. */
+  /** Every counted trip, oldest first. */
   allTrips: StoredTrip[];
+  /** Every stored trip inside the selected period, including the ones left out of the analyses. */
+  recordedTrips: StoredTrip[];
+  /** Every stored trip, including the ones left out of the analyses. */
+  allRecordedTrips: StoredTrip[];
+  /** Plausibility result and review status per trip id. */
+  checks: Map<string, TripCheck>;
+  /** Suspicious trips without a decision, over all periods. */
+  pendingReview: number;
   loading: boolean;
   period: Period;
   setPeriod: (period: Period) => void;
@@ -41,14 +51,23 @@ export function filterByPeriod<T extends { start: string }>(trips: readonly T[],
 
 export function DatasetProvider({ children }: { children: ReactNode }) {
   const all = useAllTrips();
+  const { usableCapacityKwh } = useSettings();
   const [period, setPeriod] = useState<Period>(() => sessionStorage.getItem('polestarlize.period') ?? 'all');
   const value = useMemo<Dataset>(() => {
-    const allTrips = all ?? [];
-    const years = [...new Set(allTrips.map((t) => t.start.slice(0, 4)))].sort().reverse();
+    const allRecordedTrips = all ?? [];
+    const { counted: allTrips, checks, pendingReview } = checkTrips(allRecordedTrips, { capacityKwh: usableCapacityKwh });
+    const years = [...new Set(allRecordedTrips.map((t) => t.start.slice(0, 4)))].sort().reverse();
     const effective = /^\d{4}$/.test(period) && !years.includes(period) ? 'all' : period;
+    // Relative periods are anchored on the latest recorded trip, so both lists cover the same span.
+    const recordedTrips = filterByPeriod(allRecordedTrips, effective);
+    const recordedIds = new Set(recordedTrips.map((t) => t.id));
     return {
-      trips: filterByPeriod(allTrips, effective),
+      trips: allTrips.filter((t) => recordedIds.has(t.id)),
       allTrips,
+      recordedTrips,
+      allRecordedTrips,
+      checks,
+      pendingReview,
       loading: all === undefined,
       period: effective,
       setPeriod: (p) => {
@@ -57,7 +76,7 @@ export function DatasetProvider({ children }: { children: ReactNode }) {
       },
       years,
     };
-  }, [all, period]);
+  }, [all, period, usableCapacityKwh]);
   return <DatasetContext.Provider value={value}>{children}</DatasetContext.Provider>;
 }
 

@@ -1,6 +1,7 @@
 import { consumptionPer100, durationMinutes, type Trip } from '../domain/trip';
 import { totals } from './core';
 import type { TripPlaces } from './places';
+import type { TripCheck } from './plausibility';
 
 export interface TripFilter {
   /** Free text matched against both addresses and the comment. */
@@ -13,17 +14,33 @@ export interface TripFilter {
   minKm: number;
   /** Place id: trips that start or end there. */
   placeId: string;
+  /** `review` (waiting for a decision), `excluded`, `flagged` (any plausibility issue) or '' for all. */
+  status: TripStatusFilter;
 }
 
-export const EMPTY_FILTER: TripFilter = { query: '', category: '', tripType: '', minKm: 0, placeId: '' };
+export type TripStatusFilter = '' | 'review' | 'excluded' | 'flagged';
+
+export const EMPTY_FILTER: TripFilter = { query: '', category: '', tripType: '', minKm: 0, placeId: '', status: '' };
+
+function matchesStatus(check: TripCheck | undefined, status: TripStatusFilter): boolean {
+  if (!status) return true;
+  if (!check) return false;
+  return status === 'flagged' ? check.issues.length > 0 : check.status === status;
+}
 
 export type TripSortKey = 'start' | 'distance' | 'energy' | 'consumption' | 'duration';
 export type SortDirection = 'asc' | 'desc';
 
-/** Filters trips; `assignments` is only needed for `placeId`. */
-export function filterTrips(trips: readonly Trip[], filter: TripFilter, assignments?: ReadonlyMap<string, TripPlaces>): Trip[] {
+/** Filters trips; `assignments` is only needed for `placeId`, `checks` only for `status`. */
+export function filterTrips<T extends Trip>(
+  trips: readonly T[],
+  filter: TripFilter,
+  assignments?: ReadonlyMap<string, TripPlaces>,
+  checks?: ReadonlyMap<string, TripCheck>,
+): T[] {
   const q = filter.query.trim().toLowerCase();
   return trips.filter((t) => {
+    if (!matchesStatus(checks?.get(t.id), filter.status)) return false;
     if (filter.category && t.category !== filter.category) return false;
     if (filter.tripType && t.tripType !== filter.tripType) return false;
     if (filter.minKm > 0 && t.distanceKm < filter.minKm) return false;
@@ -52,7 +69,7 @@ function valueOf(t: Trip, key: TripSortKey): string | number | null {
 }
 
 /** Returns a sorted copy. Trips without a value (no energy, …) always go last. */
-export function sortTrips(trips: readonly Trip[], key: TripSortKey, direction: SortDirection): Trip[] {
+export function sortTrips<T extends Trip>(trips: readonly T[], key: TripSortKey, direction: SortDirection): T[] {
   const sign = direction === 'asc' ? 1 : -1;
   const keyed = trips.map((t) => ({ t, v: valueOf(t, key) }));
   keyed.sort((a, b) => {

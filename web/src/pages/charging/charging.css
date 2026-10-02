@@ -37,9 +37,20 @@
 
 .bc-places {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
   align-items: start;
+}
+
+.bc-places-foot {
+  display: grid;
+  gap: 6px;
+  padding: 12px 20px 16px;
+  border-top: 1px solid var(--rule);
+}
+
+.bc-places-foot p {
+  margin: 0;
 }
 
 .bc-places > .panel-flush > .panel-title {
@@ -47,8 +58,4 @@
   margin-bottom: 8px;
 }
 
-@media (max-width: 1500px) {
-  .bc-places {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
+

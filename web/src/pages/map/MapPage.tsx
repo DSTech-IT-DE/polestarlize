@@ -68,7 +68,7 @@ export default function MapPage() {
   const { t } = useTranslation('map');
   const f = useFormat();
   const theme = useChartTheme();
-  const { mapConsent } = useSettings();
+  const { mapConsent, places: savedPlaces } = useSettings();
   const { trips, loading } = useDataset();
 
   const [sessionConsent, setSessionConsent] = useState(false);
@@ -78,7 +78,7 @@ export default function MapPage() {
   const [combined, setCombined] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
-  const analysis = useMemo(() => analyzePlaces(trips), [trips]);
+  const analysis = useMemo(() => analyzePlaces(trips, savedPlaces), [trips, savedPlaces]);
   const geo = useMemo(() => geography(trips, analysis.places, analysis.home, analysis.work), [trips, analysis]);
   const routes = useMemo(() => frequentRoutes(trips, analysis.assignments, { combined, limit: TOP_ROUTES }), [trips, analysis, combined]);
   const mapData = useMemo(() => buildMapData(trips, analysis, geo.bounds), [trips, analysis, geo.bounds]);

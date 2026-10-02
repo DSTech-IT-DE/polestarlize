@@ -26,7 +26,7 @@ function IdentityBlock() {
   const { t } = useTranslation('sync');
   const { t: ts } = useTranslation('settings');
   const state = useSyncState();
-  const { allTrips } = useDataset();
+  const { allRecordedTrips } = useDataset();
   const [copied, setCopied] = useState(false);
   const [flow, setFlow] = useState<IdFlow>(null);
   const [confirming, setConfirming] = useState(false);
@@ -122,7 +122,7 @@ function IdentityBlock() {
 
       {flow && confirming && (
         <div className="note note-warning" role="alertdialog" aria-label={t('account.continue')}>
-          <p>{t(server ? 'account.confirmServer' : 'account.confirmLocal', { count: allTrips.length })}</p>
+          <p>{t(server ? 'account.confirmServer' : 'account.confirmLocal', { count: allRecordedTrips.length })}</p>
           {flow.kind === 'use' && <p><code>{typed.toLowerCase()}</code></p>}
           <div className="account-row">
             <button type="button" className="button button-danger button-small" disabled={busy} onClick={() => void apply()}>

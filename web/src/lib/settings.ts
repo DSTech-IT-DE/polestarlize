@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react';
 import type { DistanceUnit } from '../domain/trip';
+import { sanitizeSavedPlaces, type SavedPlace } from './savedPlaces';
 
 export type ThemePreference = 'system' | 'light' | 'dark';
 
@@ -15,8 +16,12 @@ export interface Settings {
   homePrice: number;
   /** Price per kWh at public chargers. */
   publicPrice: number;
-  /** Share of energy charged at home, 0..1. */
+  /** Share of energy charged at home, 0..1. Only used with `priceMix: 'manual'`. */
   homeShare: number;
+  /** `places`: price per kWh from the charging sessions and the price of each place; `manual`: fixed home share. */
+  priceMix: 'places' | 'manual';
+  /** Charging places the user marked as home/work or gave a price. */
+  places: SavedPlace[];
   /** Petrol price per litre, used for the comparison with a combustion car. */
   fuelPrice: number;
   /** Consumption of the comparison combustion car in l/100 km. */
@@ -45,6 +50,8 @@ export const DEFAULT_SETTINGS: Settings = {
   homePrice: 0.32,
   publicPrice: 0.59,
   homeShare: 0.8,
+  priceMix: 'places',
+  places: [],
   fuelPrice: 1.75,
   fuelConsumption: 6.5,
   chargingLossPercent: 10,
@@ -53,6 +60,36 @@ export const DEFAULT_SETTINGS: Settings = {
   mapConsent: false,
   updatedAt: '',
 };
+
+/** The settings that follow the user to other devices and into backups. */
+export function syncedSettings(settings: Settings): Record<string, unknown> {
+  const data: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(settings)) {
+    if (!LOCAL_ONLY_SETTINGS.includes(key as keyof Settings)) data[key] = value;
+  }
+  return data;
+}
+
+/**
+ * Keeps only known, synced keys whose type matches the defaults, for settings
+ * from a sync server or a backup. A newer client may know more keys.
+ */
+export function acceptRemoteSettings(data: Record<string, unknown>): Partial<Settings> {
+  const accepted: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(data)) {
+    if (LOCAL_ONLY_SETTINGS.includes(key as keyof Settings)) continue;
+    const fallback = (DEFAULT_SETTINGS as unknown as Record<string, unknown>)[key];
+    if (key === 'places') {
+      const places = sanitizeSavedPlaces(value);
+      if (places) accepted.places = places;
+    } else if (key === 'priceMix') {
+      if (value === 'places' || value === 'manual') accepted.priceMix = value;
+    } else if (fallback !== undefined && typeof value === typeof fallback) {
+      accepted[key] = value;
+    }
+  }
+  return accepted as Partial<Settings>;
+}
 
 const STORAGE_KEY = 'polestarlize.settings';
 const listeners = new Set<() => void>();

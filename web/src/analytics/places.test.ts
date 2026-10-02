@@ -127,6 +127,21 @@ describe('analyzePlaces', () => {
     expect(result.places.filter((p) => p.isWork)).toHaveLength(1);
   });
 
+  it('follows places the user marked', () => {
+    const home = result.home!;
+    const work = result.work!;
+    const mark = (p: { lat: number; lon: number }, kind: 'home' | 'work' | 'other') => ({ id: kind, lat: p.lat, lon: p.lon, kind, price: null, label: '' });
+    // The detected home is really the workplace and vice versa.
+    const swapped = analyzePlaces(trips, [mark(home, 'work'), mark(work, 'home')]);
+    expect(swapped.home?.label).toBe(work.label);
+    expect(swapped.work?.label).toBe(home.label);
+    expect(swapped.places.filter((p) => p.isHome)).toHaveLength(1);
+    // A place marked as something else is not detected as home any more.
+    expect(analyzePlaces(trips, [mark(home, 'other')]).home).toBeNull();
+    // A price alone does not change the detection.
+    expect(analyzePlaces(trips, [{ ...mark(home, 'other'), kind: null, price: 0.3 }]).home?.label).toBe(home.label);
+  });
+
   it('reports no home or work when nothing dominates', () => {
     const spot = (k: number): Spot => ({ ...SHOP, lat: SHOP.lat + k * 0.05 });
     const scattered = Array.from({ length: 8 }, (_, i) => trip(i, `2025-03-${pad(i + 3)}`, '10:00', '10:30', spot(i), spot(i + 1)));

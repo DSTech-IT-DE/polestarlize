@@ -16,7 +16,7 @@ export interface MergePlan {
 
 const COMPARED_FIELDS: (keyof Trip)[] = [
   'end', 'startAddress', 'endAddress', 'distanceKm', 'energyKwh', 'category', 'startLat', 'startLon',
-  'endLat', 'endLon', 'startOdometerKm', 'endOdometerKm', 'tripType', 'socStart', 'socEnd', 'comment',
+  'endLat', 'endLon', 'startOdometerKm', 'endOdometerKm', 'tripType', 'socStart', 'socEnd', 'comment', 'review',
 ];
 
 export function sameTrip(a: Trip, b: Trip): boolean {
@@ -42,6 +42,8 @@ export function combineIncoming(batches: readonly (readonly Trip[])[]): Trip[] {
  * by id (start time + start odometer). A stored trip that is missing from the
  * export but overlaps an exported trip in time was changed in the app (merged
  * or split), so the export is taken as the newer truth and it is removed.
+ * The user's review decision is kept unless the incoming trip carries its own
+ * (backups do).
  */
 const MAX_TRIP_DAYS = 31;
 
@@ -58,8 +60,10 @@ export function planMerge(existing: readonly Trip[], incoming: readonly Trip[]):
   const stats: MergeStats = { added: 0, updated: 0, unchanged: 0, replaced: 0 };
   const put: Trip[] = [];
 
-  for (const trip of incoming) {
-    const current = existingById.get(trip.id);
+  for (const exported of incoming) {
+    const current = existingById.get(exported.id);
+    // Exports know nothing about reviews; a decision made here survives every later import.
+    const trip = current?.review && exported.review === undefined ? { ...exported, review: current.review } : exported;
     if (!current) {
       stats.added++;
       put.push(trip);

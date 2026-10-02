@@ -3,9 +3,9 @@ import { parseAddress, shortAddress } from './address';
 
 describe('parseAddress', () => {
   it('parses German style addresses', () => {
-    expect(parseAddress('Hauptstraße 14, 32369 Musterstadt-Nord, Germany')).toEqual({
+    expect(parseAddress('Hauptstraße 14, 10115 Musterstadt-Nord, Germany')).toEqual({
       street: 'Hauptstraße 14',
-      postalCode: '32369',
+      postalCode: '10115',
       town: 'Musterstadt-Nord',
       country: 'Germany',
     });
@@ -36,7 +36,7 @@ describe('parseAddress', () => {
 
 describe('shortAddress', () => {
   it('drops postal code and country', () => {
-    expect(shortAddress('Hauptstraße 14, 32369 Musterstadt, Germany')).toBe('Hauptstraße 14, Musterstadt');
+    expect(shortAddress('Hauptstraße 14, 10115 Musterstadt, Germany')).toBe('Hauptstraße 14, Musterstadt');
   });
   it('returns the input when it cannot be split and a dash when empty', () => {
     expect(shortAddress('Somewhere')).toBe('Somewhere');

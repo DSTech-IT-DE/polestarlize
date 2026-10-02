@@ -115,6 +115,15 @@ th[aria-sort='descending'] .th-sort {
   border-bottom-color: transparent;
 }
 
+.trip-row.is-held-back td {
+  color: var(--muted);
+}
+
+.trip-row.is-held-back .trip-route {
+  text-decoration: line-through;
+  text-decoration-color: var(--rule-strong);
+}
+
 .table .trip-when {
   text-align: left;
   white-space: nowrap;
@@ -165,6 +174,40 @@ th[aria-sort='descending'] .th-sort {
   grid-column: 1 / -1;
 }
 
+.trip-review {
+  padding: 10px 12px;
+  border-left: 2px solid var(--rule-strong);
+  background: var(--surface);
+}
+
+.trip-review-pending {
+  border-left-color: var(--warning);
+}
+
+.trip-review-issues {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+
+.trip-review-issues li + li {
+  margin-top: 2px;
+}
+
+.trip-details .trip-review-state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-top: 8px;
+  color: var(--ink-2);
+}
+
+.trip-review-actions {
+  display: flex;
+  gap: 8px;
+}
+
 .trip-pager {
   display: flex;
   align-items: center;
@@ -188,5 +231,12 @@ th[aria-sort='descending'] .th-sort {
 
   .trip-detail-row td {
     padding-left: 12px;
+  }
+
+  /* The table scrolls sideways on phones; keep the details (and the review buttons) in view. */
+  .trip-details {
+    position: sticky;
+    left: 12px;
+    width: calc(100vw - 56px);
   }
 }

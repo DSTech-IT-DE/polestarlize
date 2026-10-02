@@ -29,7 +29,14 @@ export interface Trip {
   /** State of charge in percent at trip end. */
   socEnd: number | null;
   comment: string;
+  /**
+   * The user's decision whether the trip counts in the analyses; not part of
+   * the export. Absent = no decision, then the plausibility check decides.
+   */
+  review?: TripReview;
 }
+
+export type TripReview = 'include' | 'exclude';
 
 /** A trip as persisted locally, with bookkeeping for sync. */
 export interface StoredTrip extends Trip {

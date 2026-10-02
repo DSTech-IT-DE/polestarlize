@@ -33,6 +33,7 @@ describe('price model', () => {
     expect(blendedPrice(A)).toBeCloseTo(0.375);
     expect(blendedPrice({ ...A, homeShare: 1 })).toBeCloseTo(0.3);
     expect(blendedPrice({ ...A, homeShare: 0 })).toBeCloseTo(0.6);
+    expect(blendedPrice({ ...A, mixPrice: 0.21 })).toBe(0.21);
   });
 
   it('adds the charging loss on top of the battery energy', () => {

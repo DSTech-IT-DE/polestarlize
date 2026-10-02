@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Trip } from '../domain/trip';
-import { EMPTY_FILTER, filterTrips, sortTrips, summarizeTrips } from './tripsFilter';
+import type { TripCheck } from './plausibility';
+import { EMPTY_FILTER, filterTrips, sortTrips, summarizeTrips, type TripFilter } from './tripsFilter';
 
 function trip(id: string, start: string, patch: Partial<Trip> = {}): Trip {
   return {
@@ -57,6 +58,20 @@ describe('filterTrips', () => {
     ]);
     expect(filterTrips(trips, { ...EMPTY_FILTER, placeId: 'p2' }, assignments).map((t) => t.id)).toEqual(['a', 'b']);
     expect(filterTrips(trips, { ...EMPTY_FILTER, placeId: 'p2' })).toHaveLength(0);
+  });
+
+  it('filters by review status through the checks', () => {
+    const checks = new Map<string, TripCheck>([
+      ['a', { issues: [], status: 'ok' }],
+      ['b', { issues: ['low-consumption'], status: 'review' }],
+      ['c', { issues: [], status: 'excluded' }],
+      ['d', { issues: ['soc-gain'], status: 'ok' }],
+    ]);
+    const ids = (status: TripFilter['status']) => filterTrips(trips, { ...EMPTY_FILTER, status }, undefined, checks).map((t) => t.id);
+    expect(ids('')).toEqual(['a', 'b', 'c', 'd']);
+    expect(ids('review')).toEqual(['b']);
+    expect(ids('excluded')).toEqual(['c']);
+    expect(ids('flagged')).toEqual(['b', 'd']);
   });
 });
 

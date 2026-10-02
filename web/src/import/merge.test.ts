@@ -28,6 +28,19 @@ describe('planMerge', () => {
     expect(plan.put[0].category).toBe('Business');
   });
 
+  it('keeps a review decision when the same trip is exported again', () => {
+    const excluded = { ...a, review: 'exclude' as const };
+    expect(planMerge([excluded], [a]).stats.unchanged).toBe(1);
+    const plan = planMerge([excluded], [{ ...a, comment: 'edited in the app' }]);
+    expect(plan.put[0]).toMatchObject({ comment: 'edited in the app', review: 'exclude' });
+  });
+
+  it('takes the review decision of a restored backup', () => {
+    const plan = planMerge([a], [{ ...a, review: 'include' }]);
+    expect(plan.stats.updated).toBe(1);
+    expect(plan.put[0].review).toBe('include');
+  });
+
   it('replaces trips that were merged after an earlier export', () => {
     const merged = trip('2026-01-01T08:00', '2026-01-01T12:20', 100, { tripType: 'MERGED', distanceKm: 10 });
     const plan = planMerge([a, b, c], [merged, c]);

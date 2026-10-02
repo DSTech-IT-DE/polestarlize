@@ -1,11 +1,15 @@
-import type { StoredTrip, Trip } from '../domain/trip';
+import { tripCheck } from '../analytics/plausibility';
+import type { StoredTrip, Trip, TripReview } from '../domain/trip';
 import { combineIncoming, planMerge, type MergeStats } from '../import/merge';
 import { generateDemoTrips } from '../lib/demoData';
+import { acceptRemoteSettings, getSettings, syncedSettings, updateSettings } from '../lib/settings';
 import { db, type ImportRecord } from './db';
 
 export interface ImportSummary extends MergeStats {
   skipped: number;
   total: number;
+  /** New or changed trips that look like faulty recordings and wait for a review. */
+  flagged: number;
 }
 
 type ChangeListener = () => void;
@@ -52,10 +56,27 @@ export async function importTrips(files: { fileName: string; trips: Trip[]; skip
       lastTrip: starts[starts.length - 1] ?? null,
     };
     await db.imports.add(record);
-    return plan.stats;
+    const options = { capacityKwh: getSettings().usableCapacityKwh };
+    const flagged = plan.put.filter((t) => tripCheck(t, options).status === 'review').length;
+    return { ...plan.stats, flagged };
   });
   notify();
   return { ...stats, skipped, total: await db.trips.count() };
+}
+
+/** Records whether trips count in the analyses; `undefined` leaves it to the plausibility check again. */
+export async function setTripReview(ids: readonly string[], review: TripReview | undefined): Promise<void> {
+  const now = new Date().toISOString();
+  await db.trips
+    .where('id')
+    .anyOf([...ids])
+    .modify((trip) => {
+      if (review) trip.review = review;
+      else delete trip.review;
+      trip.updatedAt = now;
+      trip.dirty = 1;
+    });
+  notify();
 }
 
 export async function loadDemoData(): Promise<ImportSummary> {
@@ -80,21 +101,25 @@ export async function deleteAllTrips(options: { propagate: boolean }): Promise<v
 
 export interface Backup {
   format: 'polestarlize-backup';
-  version: 1;
+  /** 2 added `settings`, with the charging places. Version 1 files are still read. */
+  version: 1 | 2;
   userId: string;
   exportedAt: string;
   trips: Trip[];
   imports: ImportRecord[];
+  /** Synced settings: prices, vehicle, charging places … Device-only settings are left out. */
+  settings?: Record<string, unknown>;
 }
 
 export async function createBackup(userId: string): Promise<Backup> {
   return {
     format: 'polestarlize-backup',
-    version: 1,
+    version: 2,
     userId,
     exportedAt: new Date().toISOString(),
     trips: (await db.trips.toArray()).map(stripStorage),
     imports: await db.imports.toArray(),
+    settings: syncedSettings(getSettings()),
   };
 }
 
@@ -104,6 +129,7 @@ export function isBackup(value: unknown): value is Backup {
 }
 
 export async function restoreBackup(backup: Backup): Promise<ImportSummary> {
-  const summary = await importTrips([{ fileName: 'backup', trips: backup.trips, skipped: 0 }]);
-  return summary;
+  // Settings first, so the plausibility check of the import already uses the restored capacity.
+  if (backup.settings && typeof backup.settings === 'object') updateSettings(acceptRemoteSettings(backup.settings));
+  return importTrips([{ fileName: 'backup', trips: backup.trips, skipped: 0 }]);
 }

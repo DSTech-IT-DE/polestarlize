@@ -1,5 +1,5 @@
 /**
- * Journey Log addresses look like "Street 14, 32369 Town-District, Germany":
+ * Journey Log addresses look like "Street 14, 10115 Town-District, Germany":
  * the last segment is the country, the one before holds postal code and town.
  * US style ("Main St 1, Springfield, IL 62704, United States") puts the state
  * and ZIP code into that segment, so the town moves one segment to the left.
@@ -18,7 +18,7 @@ const POSTAL_SUFFIX = /\s+[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$|\s+[A-Z]\d[A-Z]\s*\
 // "IL 62704" or "CA 94016".
 const US_STATE_ZIP = /^([A-Z]{2})\s+(\d{5}(?:-\d{4})?)$/;
 
-/** Splits a locality segment like "32369 Rahden-Wehe" into postal code and town. */
+/** Splits a locality segment like "10115 Musterstadt-Nord" into postal code and town. */
 export function splitLocality(segment: string): { postalCode: string; town: string } {
   const text = segment.trim();
   const prefix = POSTAL_PREFIX.exec(text);

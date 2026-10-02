@@ -1,3 +1,4 @@
+import { matchSavedPlace, type PlaceKind, type SavedPlace } from '../lib/savedPlaces';
 import { median } from './core';
 import { distanceMeters, shortAddress, type Stint } from './stints';
 
@@ -95,8 +96,10 @@ export interface ChargingPlace {
   /** Share of all sessions / of all estimated energy, 0..1. */
   shareOfSessions: number;
   shareOfEnergy: number;
-  /** Most used place, flagged only when it holds more than `HOME_SESSION_SHARE` of the sessions. */
+  /** Most used place, flagged only when it holds more than `HOME_SESSION_SHARE` of the sessions and the user marked no home. */
   likelyHome: boolean;
+  /** The user's description of this place, if any. */
+  saved: SavedPlace | null;
   /** `from` of the member sessions, to look up which place a session belongs to. */
   sessionKeys: string[];
 }
@@ -116,13 +119,25 @@ function mostCommon(values: readonly string[]): string {
 }
 
 /**
- * Greedy clustering by frequency: the session with the most neighbours inside the
- * radius becomes a place together with those neighbours, repeat with the rest.
- * Sessions without coordinates end up in one place without a position.
+ * Sessions near a place the user saved belong to that place. The rest is
+ * clustered greedily by frequency: the session with the most neighbours inside
+ * the radius becomes a place together with those neighbours, repeat with the
+ * rest. Sessions without coordinates end up in one place without a position.
  */
-export function chargingPlaces(sessions: readonly ChargingSession[], radiusM = PLACE_RADIUS_M): ChargingPlace[] {
-  const located = sessions.filter((s) => s.lat != null && s.lon != null);
-  const unlocated = sessions.filter((s) => s.lat == null || s.lon == null);
+export function chargingPlaces(sessions: readonly ChargingSession[], saved: readonly SavedPlace[] = [], radiusM = PLACE_RADIUS_M): ChargingPlace[] {
+  const groups: { members: ChargingSession[]; located: boolean; saved: SavedPlace | null }[] = [];
+  const bySaved = new Map<SavedPlace, ChargingSession[]>();
+  const rest: ChargingSession[] = [];
+  for (const s of sessions) {
+    const match = matchSavedPlace(s.lat, s.lon, saved);
+    if (!match) rest.push(s);
+    else if (bySaved.has(match)) bySaved.get(match)!.push(s);
+    else bySaved.set(match, [s]);
+  }
+  for (const [place, members] of bySaved) groups.push({ members, located: true, saved: place });
+
+  const located = rest.filter((s) => s.lat != null && s.lon != null);
+  const unlocated = rest.filter((s) => s.lat == null || s.lon == null);
   const neighbours: number[][] = located.map(() => []);
   for (let i = 0; i < located.length; i++) {
     for (let j = i + 1; j < located.length; j++) {
@@ -133,7 +148,6 @@ export function chargingPlaces(sessions: readonly ChargingSession[], radiusM = P
     }
   }
   const assigned = new Array<boolean>(located.length).fill(false);
-  const groups: { members: ChargingSession[]; located: boolean }[] = [];
   for (;;) {
     let best = -1;
     let bestCount = -1;
@@ -148,9 +162,9 @@ export function chargingPlaces(sessions: readonly ChargingSession[], radiusM = P
     if (best < 0) break;
     const ids = [best, ...neighbours[best].filter((j) => !assigned[j])];
     for (const i of ids) assigned[i] = true;
-    groups.push({ members: ids.map((i) => located[i]), located: true });
+    groups.push({ members: ids.map((i) => located[i]), located: true, saved: null });
   }
-  if (unlocated.length) groups.push({ members: unlocated, located: false });
+  if (unlocated.length) groups.push({ members: unlocated, located: false, saved: null });
 
   const totalSessions = sessions.length;
   const totalEnergy = sessions.reduce((a, s) => a + s.energyKwh, 0);
@@ -159,8 +173,9 @@ export function chargingPlaces(sessions: readonly ChargingSession[], radiusM = P
     const energyKwh = g.members.reduce((a, s) => a + s.energyKwh, 0);
     return {
       id: `p${index}`,
-      lat: g.located ? g.members.reduce((a, s) => a + s.lat!, 0) / n : null,
-      lon: g.located ? g.members.reduce((a, s) => a + s.lon!, 0) / n : null,
+      // A saved place keeps its own position, so it is found again in every period.
+      lat: g.saved ? g.saved.lat : g.located ? g.members.reduce((a, s) => a + s.lat!, 0) / n : null,
+      lon: g.saved ? g.saved.lon : g.located ? g.members.reduce((a, s) => a + s.lon!, 0) / n : null,
       label: shortAddress(mostCommon(g.members.map((s) => s.address))),
       sessions: n,
       energyKwh,
@@ -169,13 +184,53 @@ export function chargingPlaces(sessions: readonly ChargingSession[], radiusM = P
       shareOfSessions: totalSessions ? n / totalSessions : 0,
       shareOfEnergy: totalEnergy ? energyKwh / totalEnergy : 0,
       likelyHome: false,
+      saved: g.saved,
       sessionKeys: g.members.map((s) => s.from),
     };
   });
   places.sort((a, b) => b.sessions - a.sessions || b.energyKwh - a.energyKwh);
   const top = places.find((p) => p.lat != null);
-  if (top && top === places[0] && top.shareOfSessions > HOME_SESSION_SHARE) top.likelyHome = true;
+  const homeKnown = saved.some((p) => p.kind === 'home');
+  if (!homeKnown && top && top === places[0] && !top.saved?.kind && top.shareOfSessions > HOME_SESSION_SHARE) top.likelyHome = true;
   return places.map((p, i) => ({ ...p, id: `p${i}` }));
+}
+
+/** What the place is: as marked by the user, else `home` for the detected home, else null. */
+export function placeKind(place: Pick<ChargingPlace, 'saved' | 'likelyHome'>): PlaceKind | null {
+  return place.saved?.kind ?? (place.likelyHome ? 'home' : null);
+}
+
+export interface PlacePrices {
+  homePrice: number;
+  publicPrice: number;
+}
+
+/** Price per kWh from the grid at a place: its own price, else the home price at home and the public price anywhere else. */
+export function placePrice(place: Pick<ChargingPlace, 'saved' | 'likelyHome'>, prices: PlacePrices): number {
+  if (place.saved?.price != null) return place.saved.price;
+  return placeKind(place) === 'home' ? prices.homePrice : prices.publicPrice;
+}
+
+export interface PriceMix {
+  /** Estimated battery-side energy of all sessions. */
+  energyKwh: number;
+  /** Energy-weighted average price per kWh from the grid, null without sessions. */
+  price: number | null;
+  /** Share of the energy charged at places of kind home, 0..1. */
+  homeShare: number | null;
+}
+
+/** Average price of the energy actually charged, weighted by how much was charged where. */
+export function priceMix(places: readonly ChargingPlace[], prices: PlacePrices): PriceMix {
+  let energy = 0;
+  let cost = 0;
+  let home = 0;
+  for (const p of places) {
+    energy += p.energyKwh;
+    cost += p.energyKwh * placePrice(p, prices);
+    if (placeKind(p) === 'home') home += p.energyKwh;
+  }
+  return { energyKwh: energy, price: energy > 0 ? cost / energy : null, homeShare: energy > 0 ? home / energy : null };
 }
 
 export interface StandbyDrain {

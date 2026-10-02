@@ -43,7 +43,12 @@
     "chargingLoss": "Charging loss",
     "chargingLossHint": "Energy lost between wall plug and battery. Typically 8 to 15 %.",
     "gridCo2": "Grid CO₂ intensity",
-    "gridCo2Hint": "Average emissions per kWh of electricity. The German mix is roughly 380 g/kWh."
+    "gridCo2Hint": "Average emissions per kWh of electricity. The German mix is roughly 380 g/kWh.",
+    "mix": "Electricity price for costs",
+    "mixPlaces": "From charging places",
+    "mixManual": "Fixed home share",
+    "mixHint": "\"From charging places\" weights the detected charging sessions by the price of each place.",
+    "homeShareFallback": "Only used while no charging sessions are detected."
   },
   "data": {
     "title": "Your data",
@@ -54,12 +59,21 @@
     "delete": "Delete all trips",
     "deleteConfirm_one": "Really delete {{count}} trip",
     "deleteConfirm_other": "Really delete {{count}} trips",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "backupHint": "The backup contains all trips, your decisions on suspicious trips, the charging places and the settings."
   },
   "privacy": {
     "title": "Privacy",
     "p1": "Exports are read and analysed entirely in your browser and stored in its local database (IndexedDB). A single first-party cookie holds your anonymous ID; it is required for the site to work and is never used for tracking. There is no analytics and no advertising.",
     "p2": "The map loads tiles from OpenFreeMap only after you allow it on the map page; their servers then see your IP address.",
     "p3": "If a sync server is enabled (self-hosted Docker installation), your trips are stored there under a hash of your ID. Anyone who knows your ID can read these trips, so treat it like a password."
+  },
+  "places": {
+    "title": "Charging places",
+    "note": "Places you marked as home, work or with their own price. They apply to every period, are synced and are part of the backup.",
+    "empty": "No charging places set yet. You can set them on the Charging page under \"Where you plug in\".",
+    "toCharging": "To the charging places",
+    "actions": "Actions",
+    "remove": "Remove"
   }
 }

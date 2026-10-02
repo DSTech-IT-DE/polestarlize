@@ -60,3 +60,19 @@
   padding: 10px;
   border-top: 1px solid var(--rule);
 }
+
+.dc-assume-mix {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.dc-assume-mix .label {
+  flex-basis: 100%;
+}
+
+.dc-assume-mix .dc-caption {
+  flex: 1 1 260px;
+}

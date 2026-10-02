@@ -101,6 +101,12 @@ export default function ImportPage() {
           <a href={href('overview')}>{t('result.view')}</a>
         </div>
       )}
+      {outcome?.kind === 'done' && outcome.summary.flagged > 0 && (
+        <div className="note note-warning import-result" role="status">
+          <strong>{t('result.flaggedTitle', { count: outcome.summary.flagged })}</strong> {t('result.flagged', { count: outcome.summary.flagged })}{' '}
+          <a href={href('trips', { status: 'review' })}>{t('result.review')}</a>
+        </div>
+      )}
       {outcome?.kind === 'error' && (
         <div className="note note-critical import-result" role="alert">
           <strong>{outcome.file}:</strong> {t(`error.${outcome.code}`)}

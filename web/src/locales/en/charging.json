@@ -35,7 +35,7 @@
   },
   "places": {
     "title": "Where you plug in",
-    "note": "Sessions within {{radius}} m of each other count as one place. The label is the most common address.",
+    "note": "Sessions within {{radius}} m of each other count as one place, labelled with its most common address. Set what each place is and what a kWh costs there; this applies to every period and is kept in backups.",
     "table": "Charging places",
     "breakdown": "Energy by place (kWh)",
     "place": "Place",
@@ -46,7 +46,21 @@
     "home": "likely home",
     "unknown": "Unknown location",
     "other": "All other places",
-    "more": "{{count}} more places not shown."
+    "more": "{{count}} more places not shown.",
+    "kind": "Kind",
+    "kindNone": "Not set",
+    "kindDetectedHome": "Automatic: home",
+    "kindHome": "Home",
+    "kindWork": "Work",
+    "kindOther": "Other place",
+    "price": "Price per kWh",
+    "priceHead": "Price {{currency}}/kWh",
+    "priceDefaultHome": "Leave empty for the home electricity price from the settings.",
+    "priceDefaultPublic": "Leave empty for the public charging price from the settings.",
+    "mix": "On average {{price}}/kWh, {{home}} of the energy charged at home.",
+    "mixUsed": "The costs page uses this price.",
+    "mixManual": "The costs page currently uses a fixed home share.",
+    "toCosts": "To the costs"
   },
   "recent": {
     "title": "Latest sessions",

@@ -4,9 +4,10 @@ import type { Trip } from '../domain/trip';
 import { generateDemoTrips } from '../lib/demoData';
 import { getSettings, updateSettings } from '../lib/settings';
 import { db, getMeta } from '../store/db';
-import { deleteAllTrips, importTrips } from '../store/repository';
+import { createBackup, deleteAllTrips, importTrips, restoreBackup } from '../store/repository';
 import { resolveApiBase, type SettingsPayload, type SyncRequestBody, type SyncResponseBody } from './api';
-import { acceptRemoteSettings, CycleAbortedError, planBatches, revKey, runSyncCycle, syncedSettings } from './cycle';
+import { acceptRemoteSettings, syncedSettings } from '../lib/settings';
+import { CycleAbortedError, planBatches, revKey, runSyncCycle } from './cycle';
 
 const BASE = 'http://sync.test/api/v1/';
 const USER = '3f2b8c1e-7a4d-4e9b-8c55-1d2e3f4a5b6c';
@@ -238,6 +239,23 @@ describe('helpers', () => {
     const data = syncedSettings({ ...getSettings(), theme: 'dark', syncServerUrl: 'x', mapConsent: true, updatedAt: 'now' });
     expect(Object.keys(data)).toEqual(expect.arrayContaining(['vehicle', 'usableCapacityKwh', 'homePrice', 'distanceUnit', 'currency']));
     for (const key of ['theme', 'syncServerUrl', 'mapConsent', 'updatedAt']) expect(data).not.toHaveProperty(key);
+  });
+
+  it('backups carry the review decisions, the charging places and the synced settings', async () => {
+    const trips = generateDemoTrips().slice(0, 5);
+    await importTrips([{ fileName: 'a.csv', trips, skipped: 0 }]);
+    await db.trips.update(trips[0].id, { review: 'exclude' });
+    const place = { id: 'p1', lat: 57.7, lon: 11.97, kind: 'work' as const, price: 0.1, label: 'Work 1' };
+    updateSettings({ places: [place], homePrice: 0.27 });
+    const backup = JSON.parse(JSON.stringify(await createBackup('user'))) as Awaited<ReturnType<typeof createBackup>>;
+    expect(backup.settings).not.toHaveProperty('syncServerUrl');
+
+    await deleteAllTrips({ propagate: false });
+    updateSettings({ places: [], homePrice: 0.4 });
+    await restoreBackup(backup);
+    expect(getSettings()).toMatchObject({ places: [place], homePrice: 0.27 });
+    expect((await db.trips.get(trips[0].id))?.review).toBe('exclude');
+    expect(await db.trips.count()).toBe(5);
   });
 
   it('acceptRemoteSettings drops unknown keys, wrong types and local-only keys', () => {

@@ -12,6 +12,7 @@ import { Chart } from '../../ui/chart/Chart';
 import { barStyle, baseOption, categoryAxis, useChartTheme, valueAxis } from '../../ui/chart/theme';
 import { EmptyState } from '../../ui/EmptyState';
 import { Page, Panel, Section } from '../../ui/Page';
+import { ReviewNotice } from '../../ui/ReviewNotice';
 import { Stat, Stats } from '../../ui/Stat';
 
 export default function OverviewPage() {
@@ -72,6 +73,7 @@ export default function OverviewPage() {
   if (trips.length === 0) {
     return (
       <Page overline={t('overline')} title={t('title')} lead={t('leadEmpty')}>
+        <ReviewNotice />
         <EmptyState />
       </Page>
     );
@@ -88,6 +90,7 @@ export default function OverviewPage() {
         </a>
       }
     >
+      <ReviewNotice />
       <Stats>
         <Stat
           label={t('distance')}

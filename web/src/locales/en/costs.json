@@ -2,7 +2,7 @@
   "overline": "Costs",
   "title": "Costs",
   "lead": "What driving electric costs you, compared with a combustion car.",
-  "estimateNote": "All figures are estimates. The Journey Log records energy used by the drive, not what you paid. Costs are derived from the prices below, a fixed charging loss and a home/public mix that you set yourself. The petrol comparison assumes the same distance in a car with the consumption shown.",
+  "estimateNote": "All figures are estimates. The journey log records the energy a trip used, not what you paid. Costs follow from the prices of your charging places (or a fixed home share), a fixed charging loss and the prices below. The petrol comparison assumes the same distance in a car with the consumption shown.",
   "stats": {
     "total": "Electricity cost",
     "totalHint": "{{kwh}} from the grid",
@@ -31,7 +31,16 @@
     "derived": "Home share {{share}}, blended price {{price}}/kWh, charging loss {{loss}}, grid mix {{co2}} g CO₂/kWh, petrol car {{consumption}} l/100 km.",
     "moreInSettings": "More in settings",
     "coverage": "Only the {{count}} trips with an energy value are counted; the petrol car is compared over the same {{distance}}.",
-    "co2Note": "CO₂ counts petrol tailpipe emissions ({{factor}} kg per litre) and the grid mix for the electricity. Fuel production and manufacturing are not included."
+    "co2Note": "CO₂ counts petrol tailpipe emissions ({{factor}} kg per litre) and the grid mix for the electricity. Fuel production and manufacturing are not included.",
+    "mix": "Electricity price",
+    "mixPlaces": "From charging places",
+    "mixManual": "Fixed home share",
+    "mixPlacesHint_one": "Weighted by the energy of {{count}} detected charging session and the price of each place.",
+    "mixPlacesHint_other": "Weighted by the energy of {{count}} detected charging sessions and the price of each place.",
+    "mixPlacesNone": "No charging sessions were detected in this period, so the fixed home share from the settings applies.",
+    "mixManualHint": "Home and public price, mixed with the home share from the settings.",
+    "toPlaces": "Charging places and prices",
+    "derivedPlaces": "{{share}} of it at home, blended price {{price}}/kWh, charging loss {{loss}}, grid mix {{co2}} g CO₂/kWh, petrol car {{consumption}} l/100 km."
   },
   "charts": {
     "monthly": "Cost per month",

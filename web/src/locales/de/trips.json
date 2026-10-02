@@ -17,7 +17,13 @@
     "minDistance": "Mindestdistanz ({{unit}})",
     "reset": "Filter zurücksetzen",
     "place": "Zeigt Fahrten, die an {{place}} beginnen oder enden.",
-    "placeUnknown": "Der verlinkte Ort existiert in diesem Zeitraum nicht. Orte werden pro gewähltem Zeitraum neu berechnet, der Link kann daher veraltet sein."
+    "placeUnknown": "Der verlinkte Ort existiert in diesem Zeitraum nicht. Orte werden pro gewähltem Zeitraum neu berechnet, der Link kann daher veraltet sein.",
+    "status": "Status",
+    "statusOption": {
+      "review": "Zu prüfen",
+      "excluded": "Ausgeschlossen",
+      "flagged": "Auffällig"
+    }
   },
   "category": {
     "private": "Privat",
@@ -37,7 +43,9 @@
     "distance": "Strecke",
     "energy": "Energie",
     "consumption": "Verbrauch",
-    "split": "Strecke nach Kategorie"
+    "split": "Strecke nach Kategorie",
+    "includesNotCounted": "davon {{count}} nicht mitgezählt",
+    "withoutNotCounted": "ohne {{count}} nicht mitgezählte"
   },
   "col": {
     "when": "Start",
@@ -62,5 +70,39 @@
     "label": "Seiten",
     "prev": "Zurück",
     "next": "Weiter"
+  },
+  "review": {
+    "label": "Plausibilität",
+    "notice": {
+      "title_one": "{{count}} Fahrt sieht nach einer fehlerhaften Aufzeichnung aus.",
+      "title_other": "{{count}} Fahrten sehen nach fehlerhaften Aufzeichnungen aus.",
+      "body_one": "Sie fließt nicht in die Auswertungen ein, bis du sie angesehen und entschieden hast.",
+      "body_other": "Sie fließen nicht in die Auswertungen ein, bis du sie angesehen und entschieden hast.",
+      "show": "Ansehen",
+      "excludeAll": "Alle ausschließen"
+    },
+    "issue": {
+      "lowConsumption": "Verbrauch {{value}}. Unter {{limit}} ist mit einem Polestar nicht möglich, meist fehlt Energie in der Aufzeichnung.",
+      "lowConsumptionSoc": "Kein Energiewert. Aus dem Ladestand geschätzt höchstens {{value}}, unter {{limit}} ist nicht möglich.",
+      "longDuration": "Dauer {{duration}}. Eine einzelne Fahrt über mehr als 24 Stunden hat meist ihr Ende verpasst.",
+      "tooFast": "Durchschnittlich {{speed}}, das ist schneller als möglich.",
+      "odometerMismatch": "Laut Kilometerstand {{odometer}}, laut Fahrt {{distance}}.",
+      "socGain": "Der Ladestand steigt während der Fahrt um {{gain}} Prozentpunkte."
+    },
+    "state": {
+      "pending": "Wird nicht mitgezählt, bis du entscheidest.",
+      "included": "Von dir geprüft und mitgezählt.",
+      "excluded": "Ausgeschlossen. Die Fahrt bleibt gespeichert und bleibt ausgeschlossen, auch wenn sie in einem späteren Export wieder auftaucht.",
+      "normal": "Unauffällig, wird mitgezählt."
+    },
+    "action": {
+      "include": "Mitzählen",
+      "exclude": "Ausschließen",
+      "restore": "Wieder mitzählen"
+    },
+    "tag": {
+      "pending": "Prüfen",
+      "excluded": "Ausgeschlossen"
+    }
   }
 }

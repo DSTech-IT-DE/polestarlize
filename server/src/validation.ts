@@ -19,6 +19,8 @@ export interface Trip {
   socStart: number | null;
   socEnd: number | null;
   comment: string;
+  /** The user's decision whether the trip counts in the analyses. */
+  review?: 'include' | 'exclude';
 }
 
 export interface SettingsPayload {
@@ -79,9 +81,16 @@ function nullableNum(value: unknown, path: string, min: number, max: number): nu
   return value === null ? null : num(value, path, min, max);
 }
 
+function review(value: unknown, path: string): Trip['review'] {
+  if (value === undefined || value === null) return undefined;
+  if (value !== 'include' && value !== 'exclude') fail(path, "expected 'include' or 'exclude'");
+  return value;
+}
+
 export function parseTrip(value: unknown, path: string): Trip {
   if (!isRecord(value)) fail(path, 'expected an object');
   const v = value;
+  const decision = review(v.review, `${path}.review`);
   return {
     id: text(v.id, `${path}.id`, MAX_ID),
     start: localTime(v.start, `${path}.start`),
@@ -101,6 +110,7 @@ export function parseTrip(value: unknown, path: string): Trip {
     socStart: nullableNum(v.socStart, `${path}.socStart`, -1000, 1000),
     socEnd: nullableNum(v.socEnd, `${path}.socEnd`, -1000, 1000),
     comment: text(v.comment, `${path}.comment`, MAX_COMMENT),
+    ...(decision ? { review: decision } : {}),
   };
 }
 
