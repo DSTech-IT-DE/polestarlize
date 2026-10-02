@@ -1,11 +1,15 @@
-import type { StoredTrip, Trip } from '../domain/trip';
+import { tripCheck } from '../analytics/plausibility';
+import type { StoredTrip, Trip, TripReview } from '../domain/trip';
 import { combineIncoming, planMerge, type MergeStats } from '../import/merge';
 import { generateDemoTrips } from '../lib/demoData';
+import { getSettings } from '../lib/settings';
 import { db, type ImportRecord } from './db';
 
 export interface ImportSummary extends MergeStats {
   skipped: number;
   total: number;
+  /** New or changed trips that look like faulty recordings and wait for a review. */
+  flagged: number;
 }
 
 type ChangeListener = () => void;
@@ -52,10 +56,27 @@ export async function importTrips(files: { fileName: string; trips: Trip[]; skip
       lastTrip: starts[starts.length - 1] ?? null,
     };
     await db.imports.add(record);
-    return plan.stats;
+    const options = { capacityKwh: getSettings().usableCapacityKwh };
+    const flagged = plan.put.filter((t) => tripCheck(t, options).status === 'review').length;
+    return { ...plan.stats, flagged };
   });
   notify();
   return { ...stats, skipped, total: await db.trips.count() };
+}
+
+/** Records whether trips count in the analyses; `undefined` leaves it to the plausibility check again. */
+export async function setTripReview(ids: readonly string[], review: TripReview | undefined): Promise<void> {
+  const now = new Date().toISOString();
+  await db.trips
+    .where('id')
+    .anyOf([...ids])
+    .modify((trip) => {
+      if (review) trip.review = review;
+      else delete trip.review;
+      trip.updatedAt = now;
+      trip.dirty = 1;
+    });
+  notify();
 }
 
 export async function loadDemoData(): Promise<ImportSummary> {

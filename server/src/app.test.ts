@@ -160,6 +160,13 @@ describe('sync round trip', () => {
     expect(pull.trips).toEqual([t]);
   });
 
+  it('keeps the review decision of a trip', async () => {
+    const t = trip(6, { review: 'exclude' });
+    await sync({ sinceRev: 0, upserts: [t], deletes: [] });
+    const pull = (await (await sync({ sinceRev: 0, upserts: [], deletes: [] })).json()) as { trips: Trip[] };
+    expect(pull.trips).toEqual([t]);
+  });
+
   it('overwrites a trip with the same id', async () => {
     await sync({ sinceRev: 0, upserts: [trip(1)], deletes: [] });
     await sync({ sinceRev: 1, upserts: [trip(1, { comment: 'edited' })], deletes: [] });
@@ -296,6 +303,7 @@ describe('validation', () => {
     await expect400({ sinceRev: 0, upserts: [{ ...trip(1), start: 'tomorrow' }], deletes: [] }, /start/);
     await expect400({ sinceRev: 0, upserts: [{ ...trip(1), comment: 'x'.repeat(2001) }], deletes: [] }, /comment/);
     await expect400({ sinceRev: 0, upserts: [{ ...trip(1), id: 'x'.repeat(200) }], deletes: [] }, /id/);
+    await expect400({ sinceRev: 0, upserts: [{ ...trip(1), review: 'maybe' }], deletes: [] }, /review/);
     await expect400({ sinceRev: 0, upserts: ['trip'], deletes: [] }, /expected an object/);
     const { comment: _c, ...incomplete } = trip(1);
     await expect400({ sinceRev: 0, upserts: [incomplete], deletes: [] }, /comment/);

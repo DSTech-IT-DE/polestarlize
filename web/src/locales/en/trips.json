@@ -17,7 +17,13 @@
     "minDistance": "Min. distance ({{unit}})",
     "reset": "Reset filters",
     "place": "Showing trips that start or end at {{place}}.",
-    "placeUnknown": "The linked place does not exist in this period. Places are recalculated from the selected period, so the link may be outdated."
+    "placeUnknown": "The linked place does not exist in this period. Places are recalculated from the selected period, so the link may be outdated.",
+    "status": "Status",
+    "statusOption": {
+      "review": "Needs review",
+      "excluded": "Excluded",
+      "flagged": "Flagged"
+    }
   },
   "category": {
     "private": "Private",
@@ -37,7 +43,9 @@
     "distance": "Distance",
     "energy": "Energy",
     "consumption": "Consumption",
-    "split": "Distance by category"
+    "split": "Distance by category",
+    "includesNotCounted": "{{count}} of them not counted",
+    "withoutNotCounted": "not counting {{count}} held back"
   },
   "col": {
     "when": "Start",
@@ -62,5 +70,39 @@
     "label": "Pages",
     "prev": "Previous",
     "next": "Next"
+  },
+  "review": {
+    "label": "Plausibility",
+    "notice": {
+      "title_one": "{{count}} trip looks like a faulty recording.",
+      "title_other": "{{count}} trips look like faulty recordings.",
+      "body_one": "It is left out of the analyses until you have looked at it and decided.",
+      "body_other": "They are left out of the analyses until you have looked at them and decided.",
+      "show": "Review",
+      "excludeAll": "Exclude all"
+    },
+    "issue": {
+      "lowConsumption": "Consumption {{value}}. Below {{limit}} is not possible for a Polestar; usually the recording is missing energy.",
+      "lowConsumptionSoc": "No energy reported. Estimated from the state of charge it is at most {{value}}; below {{limit}} is not possible.",
+      "longDuration": "Duration {{duration}}. A single trip longer than 24 hours usually missed its end.",
+      "tooFast": "Average {{speed}}, faster than possible.",
+      "odometerMismatch": "The odometer says {{odometer}}, the trip says {{distance}}.",
+      "socGain": "The state of charge rises by {{gain}} points during the trip."
+    },
+    "state": {
+      "pending": "Not counted until you decide.",
+      "included": "Reviewed by you and counted.",
+      "excluded": "Excluded. The trip stays stored and stays excluded, even when a later export contains it again.",
+      "normal": "Nothing unusual, counted."
+    },
+    "action": {
+      "include": "Count it",
+      "exclude": "Exclude",
+      "restore": "Count it again"
+    },
+    "tag": {
+      "pending": "Review",
+      "excluded": "Excluded"
+    }
   }
 }

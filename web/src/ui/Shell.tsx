@@ -42,8 +42,8 @@ function VersionLabel() {
 
 function PeriodSelect() {
   const { t } = useTranslation();
-  const { period, setPeriod, years, allTrips } = useDataset();
-  if (allTrips.length === 0) return <span />;
+  const { period, setPeriod, years, allRecordedTrips } = useDataset();
+  if (allRecordedTrips.length === 0) return <span />;
   return (
     <label className="period-select">
       <span className="visually-hidden">{t('period.label')}</span>

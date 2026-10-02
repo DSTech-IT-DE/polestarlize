@@ -61,7 +61,7 @@ const CURRENCIES = ['EUR', 'CHF', 'GBP', 'SEK', 'NOK', 'DKK', 'USD'];
 export default function SettingsPage() {
   const { t, i18n } = useTranslation('settings');
   const settings = useSettings();
-  const { allTrips } = useDataset();
+  const { allRecordedTrips: allTrips } = useDataset();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const set = (patch: Partial<Settings>) => updateSettings(patch);
   const stamp = new Date().toISOString().slice(0, 10);

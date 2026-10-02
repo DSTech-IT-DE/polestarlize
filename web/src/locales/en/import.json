@@ -13,7 +13,12 @@
     "detail": "{{updated}} updated, {{unchanged}} already known, {{replaced}} replaced by merged trips. {{total}} trips stored in total.",
     "skipped_one": "{{count}} row could not be read and was skipped.",
     "skipped_other": "{{count}} rows could not be read and were skipped.",
-    "view": "Show overview →"
+    "view": "Show overview →",
+    "flaggedTitle_one": "{{count}} trip looks faulty.",
+    "flaggedTitle_other": "{{count}} trips look faulty.",
+    "flagged_one": "Possibly faulty recording detected, for example an impossibly low consumption. It is not counted until you have reviewed it.",
+    "flagged_other": "Possibly faulty recordings detected, for example an impossibly low consumption. They are not counted until you have reviewed them.",
+    "review": "Review now →"
   },
   "error": {
     "not-journey-log": "This does not look like a Journey Log export – the start date, end date or distance column is missing.",

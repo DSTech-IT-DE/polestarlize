@@ -359,6 +359,11 @@
   color: var(--accent-ink);
 }
 
+.tag-warning {
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
 /* Notes and callouts */
 .note {
   padding: 12px 16px;
@@ -374,6 +379,27 @@
 
 .note-critical {
   border-left-color: var(--critical);
+}
+
+/* Suspicious trips waiting for a decision */
+.review-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 20px;
+  margin-bottom: 24px;
+}
+
+.review-notice p {
+  flex: 1 1 380px;
+  margin: 0;
+}
+
+.review-notice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 /* Empty state */

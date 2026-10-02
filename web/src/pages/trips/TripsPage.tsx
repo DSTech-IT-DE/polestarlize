@@ -9,7 +9,9 @@ import {
   type SortDirection,
   type TripFilter,
   type TripSortKey,
+  type TripStatusFilter,
 } from '../../analytics/tripsFilter';
+import type { TripCheck } from '../../analytics/plausibility';
 import { consumptionPer100, durationMinutes, KM_PER_MILE, type Trip } from '../../domain/trip';
 import { toJourneyLogCsv } from '../../import/exportCsv';
 import { shortAddress } from '../../lib/address';
@@ -20,12 +22,14 @@ import { useDataset } from '../../store/dataset';
 import { useChartTheme } from '../../ui/chart/theme';
 import { EmptyState } from '../../ui/EmptyState';
 import { Page, Section } from '../../ui/Page';
+import { ReviewNotice } from '../../ui/ReviewNotice';
 import { Stat, Stats } from '../../ui/Stat';
 import { TripDetails } from './TripDetails';
 import './trips.css';
 
 const PAGE_SIZE = 50;
 const KNOWN_CATEGORIES: Record<string, string> = { Private: 'private', Business: 'business', Uncategorized: 'uncategorized' };
+const STATUS_FILTERS: TripStatusFilter[] = ['review', 'excluded', 'flagged'];
 
 function filterFromParams(params: URLSearchParams): TripFilter {
   return {
@@ -34,6 +38,7 @@ function filterFromParams(params: URLSearchParams): TripFilter {
     placeId: params.get('place') ?? '',
     category: params.get('category') ?? '',
     tripType: params.get('type') === 'MERGED' || params.get('type') === 'SINGLE' ? (params.get('type') as string) : '',
+    status: STATUS_FILTERS.find((s) => s === params.get('status')) ?? '',
   };
 }
 
@@ -54,7 +59,8 @@ export default function TripsPage() {
   const f = useFormat();
   const theme = useChartTheme();
   const { distanceUnit } = useSettings();
-  const { trips, loading } = useDataset();
+  // The list shows every recording, also the ones left out of the analyses.
+  const { recordedTrips: trips, checks, loading } = useDataset();
   const { params } = useRoute();
   const paramsKey = params.toString();
 
@@ -83,9 +89,12 @@ export default function TripsPage() {
   const place = filter.placeId ? places?.byId.get(filter.placeId) : undefined;
 
   const categories = useMemo(() => [...new Set(trips.map((trip) => trip.category))].sort(), [trips]);
-  const filtered = useMemo(() => filterTrips(trips, effective, places?.assignments), [trips, effective, places]);
+  const filtered = useMemo(() => filterTrips(trips, effective, places?.assignments, checks), [trips, effective, places, checks]);
   const sorted = useMemo(() => sortTrips(filtered, sort.key, sort.direction), [filtered, sort]);
-  const summary = useMemo(() => summarizeTrips(filtered), [filtered]);
+  const counted = useMemo(() => filtered.filter((trip) => checks.get(trip.id)?.status === 'ok'), [filtered, checks]);
+  // Totals follow the analyses, unless the user filters for held-back trips on purpose.
+  const summary = useMemo(() => summarizeTrips(filter.status ? filtered : counted), [filter.status, filtered, counted]);
+  const notCounted = filtered.length - counted.length;
 
   const pageCount = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
   const current = Math.min(page, pageCount - 1);
@@ -104,7 +113,7 @@ export default function TripsPage() {
     setSort((prev) => (prev.key === key ? { key, direction: prev.direction === 'desc' ? 'asc' : 'desc' } : { key, direction: 'desc' }));
     setPage(0);
   };
-  const isFiltered = filtered.length !== trips.length || filter.placeId !== '';
+  const isFiltered = filtered.length !== trips.length || filter.placeId !== '' || filter.status !== '';
   const reset = () => {
     setFilter(EMPTY_FILTER);
     setMinInput('');
@@ -166,6 +175,8 @@ export default function TripsPage() {
         </button>
       }
     >
+      <ReviewNotice showLink={filter.status !== 'review'} />
+
       <div className="trip-filters">
         <Field label={t('filter.search')} grow>
           <input
@@ -191,6 +202,16 @@ export default function TripsPage() {
             <option value="">{t('filter.all')}</option>
             <option value="SINGLE">{t('type.single')}</option>
             <option value="MERGED">{t('type.merged')}</option>
+          </select>
+        </Field>
+        <Field label={t('filter.status')}>
+          <select className="select" value={filter.status} onChange={(e) => update({ status: e.target.value as TripStatusFilter })}>
+            <option value="">{t('filter.all')}</option>
+            {STATUS_FILTERS.map((s) => (
+              <option key={s} value={s}>
+                {t(`filter.statusOption.${s}`)}
+              </option>
+            ))}
           </select>
         </Field>
         <Field label={t('filter.minDistance', { unit: distanceUnit })}>
@@ -223,11 +244,17 @@ export default function TripsPage() {
         <Stat
           label={t('summary.trips')}
           value={f.number(summary.trips)}
-          hint={isFiltered ? t('summary.ofAll', { count: trips.length }) : undefined}
+          hint={
+            notCounted > 0
+              ? t(filter.status ? 'summary.includesNotCounted' : 'summary.withoutNotCounted', { count: notCounted })
+              : isFiltered
+                ? t('summary.ofAll', { count: trips.length })
+                : undefined
+          }
           accent
         />
         <Stat label={t('summary.distance')} value={f.number(f.distanceValue(summary.distanceKm))} unit={f.distanceUnit} />
-        <Stat label={t('summary.energy')} value={f.number(summary.energyKwh)} unit="kWh" />
+        <Stat label={t('summary.energy')} value={f.number(summary.energyKwh, summary.energyKwh < 10 ? 1 : 0)} unit="kWh" />
         <Stat
           label={t('summary.consumption')}
           value={summary.consumption == null ? '–' : f.number(f.consumptionValue(summary.consumption), 1)}
@@ -291,6 +318,7 @@ export default function TripsPage() {
                 <TripRow
                   key={trip.id}
                   trip={trip}
+                  check={checks.get(trip.id)}
                   expanded={open === trip.id}
                   onToggle={() => setOpen(open === trip.id ? null : trip.id)}
                   f={f}
@@ -339,12 +367,14 @@ function Field({ label, grow, children }: { label: string; grow?: boolean; child
 
 function TripRow({
   trip,
+  check,
   expanded,
   onToggle,
   f,
   categoryLabel,
 }: {
   trip: Trip;
+  check: TripCheck | undefined;
   expanded: boolean;
   onToggle: () => void;
   f: ReturnType<typeof useFormat>;
@@ -354,9 +384,11 @@ function TripRow({
   const consumption = consumptionPer100(trip);
   const from = shortAddress(trip.startAddress);
   const to = shortAddress(trip.endAddress);
+  const status = check?.status ?? 'ok';
+  const rowClass = ['trip-row', expanded && 'is-open', status !== 'ok' && 'is-held-back'].filter(Boolean).join(' ');
   return (
     <>
-      <tr className={expanded ? 'trip-row is-open' : 'trip-row'} onClick={onToggle}>
+      <tr className={rowClass} onClick={onToggle}>
         <td className="num trip-when">
           <button
             type="button"
@@ -377,8 +409,10 @@ function TripRow({
           <span className="trip-route">
             {from} <span className="muted">→</span> {to}
           </span>
-          {(trip.tripType === 'MERGED' || trip.comment) && (
+          {(trip.tripType === 'MERGED' || trip.comment || status !== 'ok') && (
             <span className="trip-marks">
+              {status === 'review' && <span className="tag tag-warning">{t('review.tag.pending')}</span>}
+              {status === 'excluded' && <span className="tag">{t('review.tag.excluded')}</span>}
               {trip.tripType === 'MERGED' && <span className="tag">{t('type.mergedShort')}</span>}
               {trip.comment && (
                 <span className="tag" title={trip.comment}>
@@ -401,7 +435,7 @@ function TripRow({
       {expanded && (
         <tr className="trip-detail-row">
           <td colSpan={8}>
-            <TripDetails trip={trip} f={f} />
+            <TripDetails trip={trip} check={check} f={f} />
           </td>
         </tr>
       )}

@@ -13,7 +13,12 @@
     "detail": "{{updated}} aktualisiert, {{unchanged}} schon bekannt, {{replaced}} durch zusammengeführte Fahrten ersetzt. Insgesamt {{total}} Fahrten gespeichert.",
     "skipped_one": "{{count}} Zeile war nicht lesbar und wurde übersprungen.",
     "skipped_other": "{{count}} Zeilen waren nicht lesbar und wurden übersprungen.",
-    "view": "Zur Übersicht →"
+    "view": "Zur Übersicht →",
+    "flaggedTitle_one": "{{count}} Fahrt sieht fehlerhaft aus.",
+    "flaggedTitle_other": "{{count}} Fahrten sehen fehlerhaft aus.",
+    "flagged_one": "Möglicherweise fehlerhafte Aufzeichnung erkannt, zum Beispiel ein unmöglich niedriger Verbrauch. Sie wird nicht mitgezählt, bis du sie geprüft hast.",
+    "flagged_other": "Möglicherweise fehlerhafte Aufzeichnungen erkannt, zum Beispiel ein unmöglich niedriger Verbrauch. Sie werden nicht mitgezählt, bis du sie geprüft hast.",
+    "review": "Jetzt prüfen →"
   },
   "error": {
     "not-journey-log": "Das sieht nicht nach einem Journey-Log-Export aus – Startdatum, Enddatum oder Strecke fehlen.",

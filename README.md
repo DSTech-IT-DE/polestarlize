@@ -30,6 +30,14 @@ The app mails you the same data as `.csv` and `.xlsx`; either works. Import a ne
 are identified by start time and odometer, so overlapping exports never create duplicates. Trips you edited in the
 app (category, comment) are updated, and trips you merged in the app replace the single trips they cover.
 
+### Faulty recordings
+
+Every trip is checked for values that cannot be real: a consumption below 10 kWh/100 km (estimated from the state of
+charge when the car reported no energy), a single trip lasting more than 24 hours, an average speed above 200 km/h,
+distance and odometer that disagree, or a state of charge that rises while driving. Such trips are flagged on
+import and left out of all analyses until you review them on the Trips page: count them or exclude them. Your
+decision is stored with the trip and survives later imports of the same trip.
+
 ### Your data and your ID
 
 There are no accounts. On your first visit you get a random ID (UUID), stored in a first-party cookie.
