@@ -1,5 +1,6 @@
 import { toDate, type Trip } from '../domain/trip';
 import { parseAddress, shortAddress } from '../lib/address';
+import { matchSavedPlace, type SavedPlace } from '../lib/savedPlaces';
 import { median } from './core';
 
 /** Endpoints closer than this (metres) are the same place. GPS jitter is a few metres, car parks are bigger. */
@@ -207,7 +208,7 @@ interface Acc {
 /** Longest parking time that still counts as a dwell (longer means data is missing or the car was stored). */
 const MAX_DWELL_MIN = 60 * 24 * 30;
 
-export function analyzePlaces(input: readonly Trip[]): PlaceAnalysis {
+export function analyzePlaces(input: readonly Trip[], saved: readonly SavedPlace[] = []): PlaceAnalysis {
   const trips = [...input].sort((a, b) => (a.start < b.start ? -1 : a.start > b.start ? 1 : 0));
 
   // Endpoint 2i is the start and 2i + 1 the end of trip i; null when the trip has no coordinates.
@@ -304,10 +305,21 @@ export function analyzePlaces(input: readonly Trip[]): PlaceAnalysis {
     assignments.set(t.id, { from: from < 0 ? null : idOfCluster.get(from)!, to: to < 0 ? null : idOfCluster.get(to)! });
   });
 
-  const { home, work } = detectHomeWork(trips, assignments, byId);
+  const { home, work } = applySavedKinds(places, detectHomeWork(trips, assignments, byId), saved);
   if (home) home.isHome = true;
   if (work) work.isWork = true;
   return { places, byId, assignments, home, work };
+}
+
+/** Places the user marked as home or work win over the detection, and a marked place is never detected as something else. */
+function applySavedKinds(places: readonly Place[], detected: { home: Place | null; work: Place | null }, saved: readonly SavedPlace[]) {
+  const marked = saved.filter((p) => p.kind != null);
+  if (marked.length === 0) return detected;
+  const kindOf = (p: Place) => matchSavedPlace(p.lat, p.lon, marked)?.kind ?? null;
+  const pick = (kind: 'home' | 'work', guess: Place | null) => places.find((p) => kindOf(p) === kind) ?? (guess && kindOf(guess) == null ? guess : null);
+  const home = pick('home', detected.home);
+  const work = pick('work', detected.work === home ? null : detected.work);
+  return { home, work };
 }
 
 /**

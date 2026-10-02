@@ -5,6 +5,7 @@ import { toJourneyLogCsv } from '../../import/exportCsv';
 import { getUserId } from '../../lib/identity';
 import { updateSettings, useSettings, type Settings } from '../../lib/settings';
 import { CUSTOM_VEHICLE, VEHICLES } from '../../lib/vehicles';
+import { SavedPlacesSection } from './SavedPlacesSection';
 import { useDataset } from '../../store/dataset';
 import { createBackup, deleteAllTrips, stripStorage } from '../../store/repository';
 import { AccountPanel } from '../../sync/AccountPanel';
@@ -22,9 +23,10 @@ function download(name: string, content: string, type: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-function NumberField({ label, hint, value, step, min, max, onChange, suffix }: {
+function NumberField({ label, hint, value, step, min, max, onChange, suffix, disabled }: {
   label: string;
   hint?: string;
+  disabled?: boolean;
   value: number;
   step: number;
   min?: number;
@@ -40,6 +42,7 @@ function NumberField({ label, hint, value, step, min, max, onChange, suffix }: {
           className="input num"
           type="number"
           inputMode="decimal"
+          disabled={disabled}
           value={Number.isFinite(value) ? value : ''}
           step={step}
           min={min}
@@ -152,9 +155,22 @@ export default function SettingsPage() {
           </label>
           <NumberField label={t('prices.home')} value={settings.homePrice} step={0.01} min={0} suffix={`${settings.currency}/kWh`} onChange={(homePrice) => set({ homePrice })} />
           <NumberField label={t('prices.public')} value={settings.publicPrice} step={0.01} min={0} suffix={`${settings.currency}/kWh`} onChange={(publicPrice) => set({ publicPrice })} />
+          <label className="field">
+            <span className="label">{t('prices.mix')}</span>
+            <Segmented
+              label={t('prices.mix')}
+              value={settings.priceMix}
+              options={[
+                { value: 'places', label: t('prices.mixPlaces') },
+                { value: 'manual', label: t('prices.mixManual') },
+              ]}
+              onChange={(priceMix) => set({ priceMix })}
+            />
+            <span className="field-hint">{t('prices.mixHint')}</span>
+          </label>
           <NumberField
             label={t('prices.homeShare')}
-            hint={t('prices.homeShareHint')}
+            hint={t(settings.priceMix === 'places' ? 'prices.homeShareFallback' : 'prices.homeShareHint')}
             value={Math.round(settings.homeShare * 100)}
             step={5}
             min={0}
@@ -185,6 +201,8 @@ export default function SettingsPage() {
           />
         </div>
       </Section>
+
+      <SavedPlacesSection />
 
       <Section title={t('data.title')} note={t('data.note', { count: allTrips.length })}>
         <div className="page-actions">
@@ -222,6 +240,9 @@ export default function SettingsPage() {
             </>
           )}
         </div>
+        <p className="section-note" style={{ marginTop: 12 }}>
+          {t('data.backupHint')}
+        </p>
       </Section>
 
       <Section title={t('privacy.title')}>

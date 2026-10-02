@@ -2,7 +2,7 @@
   "overline": "Kosten",
   "title": "Kosten",
   "lead": "Was dich das elektrische Fahren kostet – im Vergleich zum Verbrenner.",
-  "estimateNote": "Alle Werte sind Schätzungen. Das Fahrtenbuch erfasst die Energie, die die Fahrt verbraucht hat, nicht das, was du bezahlt hast. Die Kosten ergeben sich aus den Preisen unten, einem festen Ladeverlust und einem Mix aus Heim- und öffentlichem Laden, den du selbst festlegst. Der Benzinvergleich unterstellt dieselbe Strecke mit einem Auto mit dem angezeigten Verbrauch.",
+  "estimateNote": "Alle Werte sind Schätzungen. Das Fahrtenbuch erfasst die Energie, die die Fahrt verbraucht hat, nicht das, was du bezahlt hast. Die Kosten ergeben sich aus den Preisen deiner Ladeorte (oder einem festen Heimanteil), einem festen Ladeverlust und den Preisen unten. Der Benzinvergleich unterstellt dieselbe Strecke mit einem Auto mit dem angezeigten Verbrauch.",
   "stats": {
     "total": "Stromkosten",
     "totalHint": "{{kwh}} aus dem Netz",
@@ -31,7 +31,16 @@
     "derived": "Heimanteil {{share}}, Mischpreis {{price}}/kWh, Ladeverlust {{loss}}, Strommix {{co2}} g CO₂/kWh, Benziner {{consumption}} l/100 km.",
     "moreInSettings": "Mehr in den Einstellungen",
     "coverage": "Gezählt werden nur die {{count}} Fahrten mit Energiewert; der Benziner wird über dieselben {{distance}} verglichen.",
-    "co2Note": "Das CO₂ des Benziners zählt die Abgase ({{factor}} kg pro Liter), beim Strom den Netzmix. Kraftstoffherstellung und Fahrzeugbau sind nicht enthalten."
+    "co2Note": "Das CO₂ des Benziners zählt die Abgase ({{factor}} kg pro Liter), beim Strom den Netzmix. Kraftstoffherstellung und Fahrzeugbau sind nicht enthalten.",
+    "mix": "Strompreis",
+    "mixPlaces": "Aus Ladeorten",
+    "mixManual": "Fester Heimanteil",
+    "mixPlacesHint_one": "Gewichtet nach der Energie aus {{count}} erkannten Ladevorgang und dem Preis des jeweiligen Orts.",
+    "mixPlacesHint_other": "Gewichtet nach der Energie aus {{count}} erkannten Ladevorgängen und dem Preis des jeweiligen Orts.",
+    "mixPlacesNone": "Im Zeitraum wurden keine Ladevorgänge erkannt, daher gilt der feste Heimanteil aus den Einstellungen.",
+    "mixManualHint": "Heim- und öffentlicher Preis, gemischt mit dem Heimanteil aus den Einstellungen.",
+    "toPlaces": "Ladeorte und Preise",
+    "derivedPlaces": "Davon zu Hause {{share}}, Mischpreis {{price}}/kWh, Ladeverlust {{loss}}, Strommix {{co2}} g CO₂/kWh, Benziner {{consumption}} l/100 km."
   },
   "charts": {
     "monthly": "Kosten pro Monat",

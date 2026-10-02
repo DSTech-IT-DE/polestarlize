@@ -43,7 +43,12 @@
     "chargingLoss": "Ladeverlust",
     "chargingLossHint": "Energie, die zwischen Steckdose und Akku verloren geht. Üblich sind 8 bis 15 %.",
     "gridCo2": "CO₂-Intensität des Stroms",
-    "gridCo2Hint": "Durchschnittliche Emissionen je kWh Strom. Der deutsche Strommix liegt bei etwa 380 g/kWh."
+    "gridCo2Hint": "Durchschnittliche Emissionen je kWh Strom. Der deutsche Strommix liegt bei etwa 380 g/kWh.",
+    "mix": "Strompreis für die Kosten",
+    "mixPlaces": "Aus Ladeorten",
+    "mixManual": "Fester Heimanteil",
+    "mixHint": "„Aus Ladeorten“ gewichtet die erkannten Ladevorgänge mit dem Preis des jeweiligen Orts.",
+    "homeShareFallback": "Wird nur verwendet, solange keine Ladevorgänge erkannt wurden."
   },
   "data": {
     "title": "Deine Daten",
@@ -54,12 +59,21 @@
     "delete": "Alle Fahrten löschen",
     "deleteConfirm_one": "Wirklich {{count}} Fahrt löschen",
     "deleteConfirm_other": "Wirklich {{count}} Fahrten löschen",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "backupHint": "Das Backup enthält alle Fahrten, deine Entscheidungen zu auffälligen Fahrten, die Ladeorte und die Einstellungen."
   },
   "privacy": {
     "title": "Datenschutz",
     "p1": "Exporte werden vollständig in deinem Browser gelesen, ausgewertet und in dessen lokaler Datenbank (IndexedDB) gespeichert. Ein einziges First-Party-Cookie enthält deine anonyme ID; es ist technisch notwendig und wird nie zum Tracking verwendet. Es gibt kein Analytics und keine Werbung.",
     "p2": "Die Karte lädt Kartenkacheln von OpenFreeMap erst, nachdem du es auf der Kartenseite erlaubt hast; deren Server sehen dann deine IP-Adresse.",
     "p3": "Ist ein Sync-Server aktiv (selbst gehostete Docker-Installation), werden deine Fahrten dort unter einem Hash deiner ID gespeichert. Wer deine ID kennt, kann diese Fahrten lesen – behandle sie wie ein Passwort."
+  },
+  "places": {
+    "title": "Ladeorte",
+    "note": "Orte, die du als Zuhause, Arbeit oder mit eigenem Preis markiert hast. Sie gelten für alle Zeiträume, werden synchronisiert und sind im Backup enthalten.",
+    "empty": "Noch keine Ladeorte festgelegt. Das geht auf der Seite „Laden“ im Bereich „Wo du lädst“.",
+    "toCharging": "Zu den Ladeorten",
+    "actions": "Aktionen",
+    "remove": "Entfernen"
   }
 }

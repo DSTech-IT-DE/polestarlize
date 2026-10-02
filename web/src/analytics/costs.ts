@@ -28,10 +28,13 @@ export interface CostAssumptions {
   chargingLossPercent: number;
   /** g CO2 per kWh of electricity. */
   gridCo2: number;
+  /** Price per kWh measured from the charging places; replaces the home/public mix when set. */
+  mixPrice?: number | null;
 }
 
-/** Average price per kWh drawn from the grid, given the home/public mix. */
-export function blendedPrice(a: Pick<CostAssumptions, 'homePrice' | 'publicPrice' | 'homeShare'>): number {
+/** Average price per kWh drawn from the grid: from the charging places when known, else the fixed home/public mix. */
+export function blendedPrice(a: Pick<CostAssumptions, 'homePrice' | 'publicPrice' | 'homeShare' | 'mixPrice'>): number {
+  if (a.mixPrice != null) return a.mixPrice;
   return a.homeShare * a.homePrice + (1 - a.homeShare) * a.publicPrice;
 }
 

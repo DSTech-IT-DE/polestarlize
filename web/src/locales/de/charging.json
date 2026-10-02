@@ -35,7 +35,7 @@
   },
   "places": {
     "title": "Wo du lädst",
-    "note": "Ladevorgänge im Abstand von höchstens {{radius}} m gelten als ein Ort. Die Bezeichnung ist die häufigste Adresse.",
+    "note": "Ladevorgänge im Abstand von höchstens {{radius}} m gelten als ein Ort. Die Bezeichnung ist die häufigste Adresse. Lege für jeden Ort fest, was er ist und was dort eine kWh kostet; das gilt für alle Zeiträume und landet im Backup.",
     "table": "Ladeorte",
     "breakdown": "Energie nach Ort (kWh)",
     "place": "Ort",
@@ -46,7 +46,21 @@
     "home": "wahrscheinlich zu Hause",
     "unknown": "Unbekannter Ort",
     "other": "Alle anderen Orte",
-    "more": "{{count}} weitere Orte werden nicht angezeigt."
+    "more": "{{count}} weitere Orte werden nicht angezeigt.",
+    "kind": "Art",
+    "kindNone": "Nicht festgelegt",
+    "kindDetectedHome": "Automatisch: zu Hause",
+    "kindHome": "Zuhause",
+    "kindWork": "Arbeit",
+    "kindOther": "Anderer Ort",
+    "price": "Preis pro kWh",
+    "priceHead": "Preis {{currency}}/kWh",
+    "priceDefaultHome": "Leer lassen für den Heimstrompreis aus den Einstellungen.",
+    "priceDefaultPublic": "Leer lassen für den Preis öffentlicher Ladesäulen aus den Einstellungen.",
+    "mix": "Im Schnitt {{price}}/kWh, {{home}} der Energie zu Hause geladen.",
+    "mixUsed": "Die Kostenseite rechnet mit diesem Preis.",
+    "mixManual": "Die Kostenseite rechnet derzeit mit einem festen Heimanteil.",
+    "toCosts": "Zu den Kosten"
   },
   "recent": {
     "title": "Letzte Ladevorgänge",

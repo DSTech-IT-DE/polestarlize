@@ -16,7 +16,7 @@ charge and how your battery is doing.
 | Trips | Searchable, sortable log of every trip, per-category totals (private/business), CSV export |
 | Map & places | Map of your trips and endpoints, frequent places and routes, home/work detection, towns and countries |
 | Battery | Estimated usable capacity and state of health over time, how the battery is used (SOC windows, cycles) |
-| Charging | Charging sessions derived from SOC changes between trips, charging places, standby drain |
+| Charging | Charging sessions derived from SOC changes between trips, charging places (mark them as home/work, set a price per place), standby drain |
 | Driving profile | When you drive (weekday × hour, calendar), trip lengths, efficiency by distance, speed and season, records |
 | Costs | Energy cost with your own prices, comparison with a petrol car, CO₂ |
 
@@ -43,7 +43,8 @@ decision is stored with the trip and survives later imports of the same trip.
 There are no accounts. On your first visit you get a random ID (UUID), stored in a first-party cookie.
 
 - **GitHub Pages version:** all data stays in your browser (IndexedDB). Move it to another device with the backup
-  file (Settings → Download backup).
+  file (Settings → Download backup). The backup contains the trips, your review decisions, the charging places and
+  the settings.
 - **Self-hosted with Docker:** the built-in sync server stores your trips under a hash of your ID. Enter the ID on
   another device to get your data there. Treat the ID like a password.
 

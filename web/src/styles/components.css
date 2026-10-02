@@ -484,3 +484,17 @@
 .field > .segmented {
   align-self: flex-start;
 }
+
+/* Kind and price of a charging place, edited inside tables */
+.table .place-kind {
+  height: 30px;
+  min-width: 150px;
+  font-size: 13px;
+}
+
+.table .place-price {
+  width: 76px;
+  height: 30px;
+  font-size: 13px;
+  text-align: right;
+}

@@ -1,6 +1,6 @@
 /** One complete sync round: push local changes in batches, pull remote ones, apply everything. */
 import type { StoredTrip } from '../domain/trip';
-import { DEFAULT_SETTINGS, getSettings, LOCAL_ONLY_SETTINGS, updateSettings, type Settings } from '../lib/settings';
+import { acceptRemoteSettings, getSettings, syncedSettings, updateSettings } from '../lib/settings';
 import { db, getMeta, setMeta, type Tombstone } from '../store/db';
 import { stripStorage } from '../store/repository';
 import { postSync, type SettingsPayload, type SyncRequestBody, type SyncResponseBody } from './api';
@@ -36,24 +36,6 @@ export function planBatches<U, D>(upserts: readonly U[], deletes: readonly D[], 
   }));
 }
 
-export function syncedSettings(settings: Settings): Record<string, unknown> {
-  const data: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(settings)) {
-    if (!LOCAL_ONLY_SETTINGS.includes(key as keyof Settings)) data[key] = value;
-  }
-  return data;
-}
-
-/** Keeps only known, synced keys whose type matches the defaults; a newer client may know more keys. */
-export function acceptRemoteSettings(data: Record<string, unknown>): Partial<Settings> {
-  const accepted: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(data)) {
-    if (LOCAL_ONLY_SETTINGS.includes(key as keyof Settings)) continue;
-    const fallback = (DEFAULT_SETTINGS as unknown as Record<string, unknown>)[key];
-    if (fallback !== undefined && typeof value === typeof fallback) accepted[key] = value;
-  }
-  return accepted as Partial<Settings>;
-}
 
 interface ApplyInput {
   response: SyncResponseBody;

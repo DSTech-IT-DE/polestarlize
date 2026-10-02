@@ -2,7 +2,7 @@ import { tripCheck } from '../analytics/plausibility';
 import type { StoredTrip, Trip, TripReview } from '../domain/trip';
 import { combineIncoming, planMerge, type MergeStats } from '../import/merge';
 import { generateDemoTrips } from '../lib/demoData';
-import { getSettings } from '../lib/settings';
+import { acceptRemoteSettings, getSettings, syncedSettings, updateSettings } from '../lib/settings';
 import { db, type ImportRecord } from './db';
 
 export interface ImportSummary extends MergeStats {
@@ -101,21 +101,25 @@ export async function deleteAllTrips(options: { propagate: boolean }): Promise<v
 
 export interface Backup {
   format: 'polestarlize-backup';
-  version: 1;
+  /** 2 added `settings`, with the charging places. Version 1 files are still read. */
+  version: 1 | 2;
   userId: string;
   exportedAt: string;
   trips: Trip[];
   imports: ImportRecord[];
+  /** Synced settings: prices, vehicle, charging places … Device-only settings are left out. */
+  settings?: Record<string, unknown>;
 }
 
 export async function createBackup(userId: string): Promise<Backup> {
   return {
     format: 'polestarlize-backup',
-    version: 1,
+    version: 2,
     userId,
     exportedAt: new Date().toISOString(),
     trips: (await db.trips.toArray()).map(stripStorage),
     imports: await db.imports.toArray(),
+    settings: syncedSettings(getSettings()),
   };
 }
 
@@ -125,6 +129,7 @@ export function isBackup(value: unknown): value is Backup {
 }
 
 export async function restoreBackup(backup: Backup): Promise<ImportSummary> {
-  const summary = await importTrips([{ fileName: 'backup', trips: backup.trips, skipped: 0 }]);
-  return summary;
+  // Settings first, so the plausibility check of the import already uses the restored capacity.
+  if (backup.settings && typeof backup.settings === 'object') updateSettings(acceptRemoteSettings(backup.settings));
+  return importTrips([{ fileName: 'backup', trips: backup.trips, skipped: 0 }]);
 }

@@ -4,6 +4,9 @@ import { capacitySamples, recentCapacity } from './battery';
 import {
   MIN_CHARGE_GAIN,
   chargingPlaces,
+  placeKind,
+  placePrice,
+  priceMix,
   chargingSessions,
   chargingStats,
   energyBalance,
@@ -11,6 +14,7 @@ import {
   monthlyCharging,
   standbyDrain,
 } from './charging';
+import type { SavedPlace } from '../lib/savedPlaces';
 import { buildStints, type Stint } from './stints';
 import { trip } from './stintsFixtures';
 
@@ -108,6 +112,36 @@ describe('chargingPlaces', () => {
     const places = chargingPlaces(chargingSessions(stints, 80));
     expect(places[0].sessions).toBe(2);
     expect(places.some((p) => p.likelyHome)).toBe(false);
+  });
+
+  const saved = (partial: Partial<SavedPlace>): SavedPlace => ({ id: 's1', lat: 50, lon: 10, kind: null, price: null, label: '', ...partial });
+
+  it('lets a place marked as work override the detected home', () => {
+    const stints = [...Array.from({ length: 6 }, () => at(home, 0)), at(fast, 0)];
+    const places = chargingPlaces(chargingSessions(stints, 80), [saved({ kind: 'work', lat: 50.0005 })]);
+    expect(places[0]).toMatchObject({ sessions: 6, likelyHome: false, lat: 50.0005 });
+    expect(placeKind(places[0])).toBe('work');
+  });
+
+  it('assigns sessions to a saved place even when they would form another cluster', () => {
+    const stints = [at(home, 0), at(home, 0.0015), at(fast, 0)]; // ~170 m apart, both within 250 m of the saved place
+    const places = chargingPlaces(chargingSessions(stints, 80), [saved({ lat: 50.00075, price: 0.2 })]);
+    expect(places).toHaveLength(2);
+    expect(places[0]).toMatchObject({ sessions: 2, saved: { price: 0.2 } });
+  });
+
+  it('prices each place and mixes by energy', () => {
+    const prices = { homePrice: 0.3, publicPrice: 0.6 };
+    const stints = [at(home, 0), at(home, 0), at(home, 0), at(fast, 0), stint({ lat: 51, lon: 11 })];
+    const places = chargingPlaces(chargingSessions(stints, 80), [saved({ id: 'w', ...fast, kind: 'work', price: 0 })]);
+    const [homePlace, work, other] = places;
+    expect(placePrice(homePlace, prices)).toBe(0.3);
+    expect(placePrice(work, prices)).toBe(0);
+    expect(placePrice(other, prices)).toBe(0.6);
+    const mix = priceMix(places, prices);
+    expect(mix.price).toBeCloseTo((3 * 0.3 + 0 + 0.6) / 5);
+    expect(mix.homeShare).toBeCloseTo(3 / 5);
+    expect(priceMix([], prices)).toEqual({ energyKwh: 0, price: null, homeShare: null });
   });
 
   it('groups sessions without coordinates and never calls them home', () => {

@@ -18,7 +18,9 @@ import { Chart } from '../../ui/chart/Chart';
 import { barStyle, baseOption, categoryAxis, useChartTheme, valueAxis } from '../../ui/chart/theme';
 import { EmptyState } from '../../ui/EmptyState';
 import { Page, Panel, Section } from '../../ui/Page';
+import { Segmented } from '../../ui/Segmented';
 import { Stat } from '../../ui/Stat';
+import { useChargingPlaces } from '../charging/useChargingPlaces';
 import { tipHtml } from '../driving/tip';
 import '../driving/driving.css';
 import './costs.css';
@@ -60,10 +62,13 @@ export default function CostsPage() {
   const { trips, loading } = useDataset();
   const [showAll, setShowAll] = useState(false);
 
-  const { homePrice, publicPrice, homeShare, fuelPrice, fuelConsumption, chargingLossPercent, gridCo2, currency } = settings;
+  const { homePrice, publicPrice, homeShare, fuelPrice, fuelConsumption, chargingLossPercent, gridCo2, currency, priceMix } = settings;
+  const { mix, sessions } = useChargingPlaces(trips);
+  // Without detected charging sessions there is nothing to weigh, so the fixed mix stays in use.
+  const mixPrice = priceMix === 'places' ? mix.price : null;
   const assumptions = useMemo<CostAssumptions>(
-    () => ({ homePrice, publicPrice, homeShare, fuelPrice, fuelConsumption, chargingLossPercent, gridCo2 }),
-    [homePrice, publicPrice, homeShare, fuelPrice, fuelConsumption, chargingLossPercent, gridCo2],
+    () => ({ homePrice, publicPrice, homeShare, fuelPrice, fuelConsumption, chargingLossPercent, gridCo2, mixPrice }),
+    [homePrice, publicPrice, homeShare, fuelPrice, fuelConsumption, chargingLossPercent, gridCo2, mixPrice],
   );
   const span = useMemo(() => totals(trips).spanDays, [trips]);
   const summary = useMemo(() => costSummary(trips, assumptions, span), [trips, assumptions, span]);
@@ -214,10 +219,30 @@ export default function CostsPage() {
               <PriceInput label={t('assumptions.public')} value={publicPrice} unit={t('assumptions.perKwh', { currency })} onChange={(v) => set({ publicPrice: v })} />
               <PriceInput label={t('assumptions.fuel')} value={fuelPrice} unit={t('assumptions.perLitre', { currency })} onChange={(v) => set({ fuelPrice: v })} />
             </div>
+            <div className="field dc-assume-mix">
+              <span className="label">{t('assumptions.mix')}</span>
+              <Segmented
+                label={t('assumptions.mix')}
+                value={priceMix}
+                options={[
+                  { value: 'places', label: t('assumptions.mixPlaces') },
+                  { value: 'manual', label: t('assumptions.mixManual') },
+                ]}
+                onChange={(v) => set({ priceMix: v })}
+              />
+              <span className="dc-caption" style={{ margin: 0 }}>
+                {priceMix === 'manual'
+                  ? t('assumptions.mixManualHint')
+                  : mixPrice == null
+                    ? t('assumptions.mixPlacesNone')
+                    : t('assumptions.mixPlacesHint', { count: sessions.length })}{' '}
+                <a href={href('charging')}>{t('assumptions.toPlaces')} →</a>
+              </span>
+            </div>
             <div className="dc-assume-derived">
               <span>
-                {t('assumptions.derived', {
-                  share: f.percent(homeShare * 100),
+                {t(mixPrice == null ? 'assumptions.derived' : 'assumptions.derivedPlaces', {
+                  share: f.percent((mixPrice == null ? homeShare : (mix.homeShare ?? 0)) * 100),
                   price: f.currency(blendedPrice(assumptions), 3),
                   loss: f.percent(chargingLossPercent),
                   co2: f.number(gridCo2),

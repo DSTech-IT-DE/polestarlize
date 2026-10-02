@@ -1,12 +1,9 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { capacitySamples, recentCapacity } from '../../analytics/battery';
 import {
   MIN_CHARGE_GAIN,
   MIN_STANDBY_HOURS,
   PLACE_RADIUS_M,
-  chargingPlaces,
-  chargingSessions,
   chargingStats,
   energyBalance,
   histogram,
@@ -14,8 +11,8 @@ import {
   standbyDrain,
 } from '../../analytics/charging';
 import { monthRange, totals } from '../../analytics/core';
-import { buildStints } from '../../analytics/stints';
 import { useFormat } from '../../lib/format';
+import { href } from '../../lib/router';
 import { useSettings } from '../../lib/settings';
 import { useDataset } from '../../store/dataset';
 import { Chart } from '../../ui/chart/Chart';
@@ -24,6 +21,8 @@ import { EmptyState } from '../../ui/EmptyState';
 import { Page, Panel, Section } from '../../ui/Page';
 import { Stat, Stats } from '../../ui/Stat';
 import './charging.css';
+import { PlaceKindSelect, PlacePriceInput } from './PlaceSettings';
+import { useChargingPlaces } from './useChargingPlaces';
 
 const PLACE_ROWS = 10;
 const CHART_PLACES = 5;
@@ -35,18 +34,12 @@ export default function ChargingPage() {
   const { t } = useTranslation('charging');
   const f = useFormat();
   const theme = useChartTheme();
-  const { trips, allTrips, loading } = useDataset();
-  const { usableCapacityKwh: nominal } = useSettings();
-
-  // Energy per SOC point depends on the usable capacity; prefer the measured one over the nominal value.
-  const measured = useMemo(() => recentCapacity(capacitySamples(allTrips)), [allTrips]);
-  const capacity = measured?.capacityKwh ?? nominal;
+  const { trips, loading } = useDataset();
+  const { homePrice, publicPrice, currency, priceMix } = useSettings();
+  const { measured, capacity, stints, sessions, places, mix } = useChargingPlaces(trips);
 
   const sum = useMemo(() => totals(trips), [trips]);
-  const stints = useMemo(() => buildStints(trips), [trips]);
-  const sessions = useMemo(() => chargingSessions(stints, capacity), [stints, capacity]);
   const stats = useMemo(() => chargingStats(sessions, sum.spanDays), [sessions, sum.spanDays]);
-  const places = useMemo(() => chargingPlaces(sessions), [sessions]);
   const standby = useMemo(() => standbyDrain(stints, capacity), [stints, capacity]);
   const balance = useMemo(() => energyBalance(sum.energyKwh, stints, sessions, capacity), [sum.energyKwh, stints, sessions, capacity]);
   const monthKeys = useMemo(() => (trips.length ? monthRange(trips[0].start.slice(0, 7), trips[trips.length - 1].start.slice(0, 7)) : []), [trips]);
@@ -55,6 +48,7 @@ export default function ChargingPage() {
 
   const tip = useMemo(() => ({ ...baseOption(theme).tooltip }), [theme]);
   const placeName = (label: string) => label || t('places.unknown');
+  const prices = { homePrice, publicPrice };
   const placeOfSession = useMemo(() => new Map(places.flatMap((p) => p.sessionKeys.map((k) => [k, p.label] as const))), [places]);
 
   const monthlyOption = useMemo(
@@ -179,6 +173,8 @@ export default function ChargingPage() {
                     <thead>
                       <tr>
                         <th>{t('places.place')}</th>
+                        <th>{t('places.kind')}</th>
+                        <th className="num">{t('places.priceHead', { currency })}</th>
                         <th className="num">{t('places.sessions')}</th>
                         <th className="num">{t('places.energy')}</th>
                         <th className="num">{t('places.soc')}</th>
@@ -191,8 +187,14 @@ export default function ChargingPage() {
                           <td>
                             <div className="bc-place">
                               <span>{placeName(p.label)}</span>
-                              {p.likelyHome && <span className="tag tag-accent">{t('places.home')}</span>}
+                              {p.likelyHome && <span className="tag">{t('places.home')}</span>}
                             </div>
+                          </td>
+                          <td>
+                            <PlaceKindSelect place={p} />
+                          </td>
+                          <td className="num">
+                            <PlacePriceInput place={p} prices={prices} f={f} />
                           </td>
                           <td className="num">{f.number(p.sessions)}</td>
                           <td className="num">{f.number(p.energyKwh, 0)} kWh</td>
@@ -212,7 +214,18 @@ export default function ChargingPage() {
                     </tbody>
                   </table>
                 </div>
-                {places.length > PLACE_ROWS && <p className="section-note" style={{ padding: '10px 20px 14px' }}>{t('places.more', { count: places.length - PLACE_ROWS })}</p>}
+                <div className="bc-places-foot">
+                  {places.length > PLACE_ROWS && <p className="section-note">{t('places.more', { count: places.length - PLACE_ROWS })}</p>}
+                  <p className="section-note">
+                    {mix.price != null &&
+                      t('places.mix', {
+                        price: f.currency(mix.price, 3),
+                        home: f.percent((mix.homeShare ?? 0) * 100, 0),
+                      })}{' '}
+                    {t(priceMix === 'places' ? 'places.mixUsed' : 'places.mixManual')}{' '}
+                    <a href={href('costs')}>{t('places.toCosts')} →</a>
+                  </p>
+                </div>
               </Panel>
               <Panel title={t('places.breakdown')}>
                 <Chart option={placesOption} ariaLabel={t('places.breakdown')} height={Math.max(180, 44 * Math.min(places.length, CHART_PLACES + 1) + 40)} />
