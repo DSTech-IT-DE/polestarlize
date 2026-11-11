@@ -1,6 +1,6 @@
 {
   "name": "@polestarlize/web",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "type": "module",
   "scripts": {
@@ -32,7 +32,7 @@
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
     "fake-indexeddb": "^6.2.6",
-    "jsdom": "^30.1.3",
+    "jsdom": "^31.0.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.5",
     "vitest": "^5.0.5"
